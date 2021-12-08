@@ -1,0 +1,13 @@
+! ; && , . 	int a = 30;
+ float f = 15.4;
+	package clases;
+L3 = {w | w has at least a sequence 01 and   Σ = {0,1}}
+L4 = {w | w is ; and Σ = {;}}.
+public class Test {
+    
+    public static void main(String[] args) {
+        LGUI l=new LGUI();
+        
+    }
+
+}
