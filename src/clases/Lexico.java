@@ -36,6 +36,13 @@ public class Lexico {
         }
         return s;
     }        
+    
+    private boolean esSimboloFinalLinea(char c2){
+        boolean v=false;
+        if(Character.isSpaceChar(c2)|| c2=='\t')
+            v=true;
+        return v;
+    }
     public void Analizar() {
         line++;
         int state = 0;
@@ -102,6 +109,8 @@ public class Lexico {
                     }else if(c2 == ';'){
                         state = 70;
                         Readout();
+                    }else if(esSimboloFinalLinea(c2)){
+                        list2.removeLast();
                     } else {
                         if(c2 != ' '){
                             System.out.println("Irreconocible");
@@ -135,7 +144,6 @@ public class Lexico {
                         token.setValor(666);
                         token.setLine(line);
                     }
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                         list2.clear();
@@ -221,7 +229,6 @@ public class Lexico {
                     token.setType("Valores numéricos");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -258,7 +265,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -271,7 +277,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -298,7 +303,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -310,7 +314,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -322,7 +325,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -344,7 +346,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -357,7 +358,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -379,7 +379,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -391,7 +390,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.append(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -413,7 +411,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -426,7 +423,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -451,7 +447,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -462,7 +457,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -474,7 +468,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -497,7 +490,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -508,7 +500,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -520,7 +511,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -541,7 +531,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -553,7 +542,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -573,7 +561,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -585,7 +572,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -607,7 +593,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -627,7 +612,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -639,7 +623,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -652,7 +635,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -674,7 +656,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -705,7 +686,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -717,7 +697,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -728,7 +707,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -740,7 +718,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -752,7 +729,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -774,7 +750,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -786,7 +761,6 @@ public class Lexico {
                     token.setType("Operadores");
                     token.setValor(666);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -797,7 +771,6 @@ public class Lexico {
                     token.setType("Símbolo del Limite");
                     token.setValor(770);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -808,7 +781,6 @@ public class Lexico {
                     token.setType("Símbolo del Límite");
                     token.setValor(770);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -819,7 +791,6 @@ public class Lexico {
                     token.setType("Símbolo del Limite");
                     token.setValor(770);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -830,7 +801,6 @@ public class Lexico {
                     token.setType("Símbolo del Limite");
                     token.setValor(770);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -841,7 +811,6 @@ public class Lexico {
                     token.setType("Símbolo del Limite");
                     token.setValor(770);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -852,7 +821,6 @@ public class Lexico {
                     token.setType("Símbolo del Limite");
                     token.setValor(770);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -863,7 +831,6 @@ public class Lexico {
                     token.setType("Símbolo del Limite");
                     token.setValor(770);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -874,7 +841,6 @@ public class Lexico {
                     token.setType("Símbolo del Limite");
                     token.setValor(770);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -885,7 +851,6 @@ public class Lexico {
                     token.setType("Símbolo del Limite");
                     token.setValor(770);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -896,7 +861,6 @@ public class Lexico {
                     token.setType("Símbolo del Limite");
                     token.setValor(770);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
@@ -907,7 +871,6 @@ public class Lexico {
                     token.setType("Símbolo del Limite");
                     token.setValor(770);
                     token.setLine(line);
-                    System.out.println(token.toString());
                     LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();

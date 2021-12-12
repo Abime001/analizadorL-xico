@@ -30,7 +30,7 @@ public class Token {
         return v;                               
     }
     
-     public Object ObtenerIndexListaTokens(int index){
+    public Object ObtenerIndexListaTokens(int index){
         int cont=0;
         Nodo temp=cabeza;        
         while (cont<index){
@@ -43,7 +43,7 @@ public class Token {
         }
         return temp.obtenerType();
     }
-       
+         
     public void eliminarFinalListaTokens(){
         int cont=0;
         Nodo temp=cabeza;
@@ -61,7 +61,7 @@ public class Token {
     }
      
     public void agregaPrimerolListaTokens(Object c,Object t, Object v,Object l){
-        //System.out.println("token: "+c+' '+t+' '+v+' '+l+'\n');
+        System.out.println("token: "+c+' '+t+' '+v+' '+l+'\n');
         if (estaVacialListaTokens()){
             cabeza= new Nodo(c,t,v,l);
           //System.out.println("b1 "+cabeza+"-->"+'\t'+" entran: "+c+' '+t+' '+v+' '+l+'\n');
@@ -93,6 +93,7 @@ public class Token {
     @Override
     public String toString() { 
         agregaPrimerolListaTokens(name, type, valor, line);
+        
         return "Token{" +
                 "nombre='" + name + '\'' +
                 ", tipo='" + type + '\'' +

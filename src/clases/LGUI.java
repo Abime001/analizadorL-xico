@@ -118,7 +118,7 @@ public class LGUI extends JFrame {
                     //    System.out.println(c);
                         lexico.list1.offer(c);//Inserción de elementos en la cola                        
                     }
-                    lexico.list1.offer('|');
+                    lexico.list1.offer('°');
                   //  System.out.println(lexico.list1.toString());
                     lexico.Analizar();
                 }
