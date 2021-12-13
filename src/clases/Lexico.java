@@ -889,6 +889,7 @@ public class Lexico {
         while(temp!=null){                 
             System.out.println("-"+temp);
             temp=token.getToken();
-        }                
+        }
+	token.reiniciaGet();                
     }
 }

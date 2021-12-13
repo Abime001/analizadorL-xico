@@ -106,6 +106,7 @@ public class LGUI extends JFrame {
         }
         if (obj == b2) { //El proceso de análisis se describe en análisis
             lexico=new Lexico();
+            Sintactico sintactico=new Sintactico();
             char a[];            
             try {
                 input = new BufferedReader(new StringReader(t1.getText()));
@@ -125,7 +126,12 @@ public class LGUI extends JFrame {
             } catch (Exception ee) {
                 ee.printStackTrace();
             }       
-            lexico.imprimeTablaTokens();
+            //lexico.imprimeTablaTokens();
+            sintactico.imprimeTablaTokens();
+            sintactico.imprimeTablaTokensReverse();
+            sintactico.Analizar();
+//            Sintactico ob =new Sintactico();
+  //          ob.Analizar();
         }
     }
 }
