@@ -13,7 +13,7 @@ public class Lexico {
     LinkedList<Character> list1=new LinkedList<>();
     LinkedList<Character> list2=new LinkedList<>();
     int line=0;
-    Token token = new Token();
+    public static Token token = new Token();
       
    
     public Lexico(){
@@ -325,7 +325,7 @@ public class Lexico {
 
                 case 17://-
                     token.setName(GetList2().trim());
-                    token.setType("Operadores resta");
+                    token.setType("Operador resta");
                     token.setValor(666);
                     token.setLine(line);
                     LGUI.t2.append(token.toString());
@@ -465,7 +465,7 @@ public class Lexico {
                     list2.clear();
                     state = 0;
                     break;
-                case 30: //
+                case 30: // &
                     Readout();
                     token.setName(GetList2());
                     token.setType("Ampersand");
@@ -542,7 +542,7 @@ public class Lexico {
                 case 37: // 
                     Readout();
                     token.setName(GetList2());
-                    token.setType("Negatición");
+                    token.setType("Negación");
                     token.setValor(666);
                     token.setLine(line);
                     LGUI.t2.append(token.toString());
@@ -611,9 +611,9 @@ public class Lexico {
                         Readout();
                     }
                     break;
-                case 44: // <<
+                case 44: // <<<
                     token.setName(GetList2());
-                    token.setType("Asinación compuesto");
+                    token.setType("Asignación compuesto");
                     token.setValor(666);
                     token.setLine(line);
                     LGUI.t2.append(token.toString());
@@ -633,7 +633,7 @@ public class Lexico {
                     state = 0;
                     break;
 
-                case 46: //
+                case 46: // <
                     Readout();
                     token.setName(GetList2());
                     token.setType("Menor que");
@@ -657,7 +657,7 @@ public class Lexico {
                     break;
                 case 48: //>=
                     token.setName(GetList2());
-                    token.setType("Mayor que");
+                    token.setType("Mayor igual que");
                     token.setValor(666);
                     token.setLine(line);
                     LGUI.t2.append(token.toString());
@@ -832,7 +832,7 @@ public class Lexico {
                     break;
                 case 66:// .
                     token.setName(GetList2());
-                    token.setType("punto");
+                    token.setType("Punto");
                     token.setValor(770);
                     token.setLine(line);
                     LGUI.t2.append(token.toString());
@@ -889,7 +889,7 @@ public class Lexico {
         System.out.println("Tokens guardados...\n\r");
         Object temp=token.getToken();                
         while(temp!=null){                 
-            System.out.println("-"+temp);
+            System.out.println("Lex - "+temp);
             temp=token.getToken();
         }
 	token.reiniciaGet();                

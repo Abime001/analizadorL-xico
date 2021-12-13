@@ -17,6 +17,8 @@ import java.io.StringReader;
 public class LGUI extends JFrame {
     JTextArea t1;
     static JTextArea t2;
+    JTextArea jtable;
+    static JTextArea jsyntax;
     JButton b1;
         ImageIcon btnCerrar = new ImageIcon("src/clases/Images/cerrar.png");
     JButton b2;
@@ -27,6 +29,14 @@ public class LGUI extends JFrame {
     JPanel jpc1;
     JPanel jph1;
     JPanel jph2;
+    JPanel jpc2;
+    JPanel jph21;
+    JPanel jph22;
+    JPanel contendor_syntax;
+    JPanel tabla;
+    JPanel syntax;
+    JLabel lb3;
+    JLabel lb4;
     JLabel lb1;
     JLabel lb2;
     BufferedReader input = null;
@@ -34,15 +44,21 @@ public class LGUI extends JFrame {
 
     public LGUI() {
         JFrame jf = new JFrame();
-        jf.setTitle("Analizador Léxico Básico - Equipo 1");
+        jf.setTitle("Analizador sintáctico p/Lenguaje propio - Equipo 1");
         Container c = jf.getContentPane();
         c.setBackground(Color.black);
         t1 = new JTextArea(10, 35);
         t2 = new JTextArea(10, 35);
+        jtable = new JTextArea(10, 35);
+        jsyntax = new JTextArea(10,35);
         lb1 = new JLabel("Ingresa el texto a analizar");
         lb1.setForeground(Color.WHITE);
         lb2 = new JLabel("Resultado del análisis léxico", SwingConstants.CENTER);
         lb2.setForeground(Color.WHITE);
+        lb3 = new JLabel("Tabla de símbolos", SwingConstants.CENTER);
+        lb3.setForeground(Color.WHITE);
+        lb4 = new JLabel("Resultado de analisis sintáctico", SwingConstants.CENTER);
+        lb4.setForeground(Color.WHITE);
         JScrollPane js1=new JScrollPane(t1);
         JScrollPane js2=new JScrollPane(t2);
         js1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -68,7 +84,33 @@ public class LGUI extends JFrame {
         b2.addActionListener(this::actionPerformed);
         b1.addActionListener(this::actionPerformed);
         b3.addActionListener(this::actionPerformed);
-        jpc1 = new JPanel();
+        //paneles syntac
+        JScrollPane jspsyn = new JScrollPane(jsyntax);
+        JScrollPane jsptab = new JScrollPane(jtable);
+        jsptab.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jspsyn.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jtable.setLineWrap(true);
+        jtable.setSize(400, 300);
+        jsyntax.setSize(400, 300);
+
+        jpc2 = new JPanel(); //Panel para etiquetas de syntax
+        this.jpc2.setBackground(Color.darkGray);
+        jph21 = new JPanel();
+            jph21.add(lb3);
+            this.jph21.setBorder(new EmptyBorder(0, 0, 0, 200));
+            this.jph21.setBackground(Color.black);
+        jph22 = new JPanel();
+            jph21.add(lb4);
+            this.jph22.setBorder(new EmptyBorder(0, 0, 0, 200));
+            this.jph22.setBackground(Color.black);
+        jpc2.add(jph21);
+        jpc2.add(jph22);
+        contendor_syntax = new JPanel(); //COntendor syntax para lb y jtxt
+            contendor_syntax.add(jpc2, BorderLayout.NORTH);
+            contendor_syntax.add(jsptab, BorderLayout.WEST);
+            contendor_syntax.add(jspsyn, BorderLayout.EAST);
+            
+        jpc1 = new JPanel(); //Contenedor top labels
         this.jpc1.setBackground(Color.black);
         jph1 = new JPanel();
             jph1.add(lb1);
@@ -80,7 +122,7 @@ public class LGUI extends JFrame {
             this.jph2.setBackground(Color.black);
         jpc1.add(jph1);
         jpc1.add(jph2);
-        jp1 = new JPanel();
+        jp1 = new JPanel(); //Contenedor bottom botonera
         this.jp1.setBackground(Color.black);
         jp1.add(b2);
         jp1.add(b3);
@@ -89,6 +131,7 @@ public class LGUI extends JFrame {
         c.add(js2, BorderLayout.EAST);
         c.add(jp1, BorderLayout.SOUTH);
         c.add(jpc1, BorderLayout.NORTH);
+        c.add(contendor_syntax, BorderLayout.SOUTH);
         jf.setSize(850, 400);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setVisible(true);
@@ -126,12 +169,10 @@ public class LGUI extends JFrame {
             } catch (Exception ee) {
                 ee.printStackTrace();
             }       
-            //lexico.imprimeTablaTokens();
-            sintactico.imprimeTablaTokens();
-            sintactico.imprimeTablaTokensReverse();
+            lexico.imprimeTablaTokens();
+            sintactico.imprimeTablaTokensSintac();
+            //sintactico.imprimeTablaTokensReverseSintac();
             sintactico.Analizar();
-//            Sintactico ob =new Sintactico();
-  //          ob.Analizar();
         }
     }
 }
