@@ -32,9 +32,11 @@ public class LGUI extends JFrame {
     JPanel jpc2;
     JPanel jph21;
     JPanel jph22;
+
     JPanel contendor_syntax;
     JPanel tabla;
     JPanel syntax;
+    
     JLabel lb3;
     JLabel lb4;
     JLabel lb1;
@@ -131,7 +133,7 @@ public class LGUI extends JFrame {
         c.add(js2, BorderLayout.EAST);
         c.add(jp1, BorderLayout.SOUTH);
         c.add(jpc1, BorderLayout.NORTH);
-        c.add(contendor_syntax, BorderLayout.SOUTH);
+        //c.add(contendor_syntax, BorderLayout.SOUTH);
         jf.setSize(850, 400);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setVisible(true);

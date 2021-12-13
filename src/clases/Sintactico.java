@@ -56,7 +56,7 @@ public class Sintactico extends  Lexico {
                         break;
                         */
                 case 0: //Producción para tipo de dato Entero
-                        if(String.valueOf(temp)=="#entero"){ //Verifica que el valor del token sea el esperado y avanza en la regla gramtical
+                        if(String.valueOf(temp)=="#ENTERO"){ //Verifica que el valor del token sea el esperado y avanza en la regla gramtical
                             temp = token.getToken();
                             if(String.valueOf(temp)=="Identificador"){
                                 temp = token.getToken();
@@ -91,7 +91,7 @@ public class Sintactico extends  Lexico {
                         }
                         break;
                 case 2://Producción para tipo de dato Real
-                        if(String.valueOf(temp)=="#real"){
+                        if(String.valueOf(temp)=="#REAL"){
                             temp=token.getToken();
                             if(String.valueOf(temp)=="Identificador"){
                                 temp=token.getToken();
@@ -122,7 +122,7 @@ public class Sintactico extends  Lexico {
                         
                         break;
                 case 3://Producción para tipo de dato Booleano
-                        if(String.valueOf(temp)=="#bool"){
+                        if(String.valueOf(temp)=="#BOOL"){
                             temp=token.getToken();
                             if(String.valueOf(temp)=="Identificador"){
                                 temp=token.getToken();
@@ -132,7 +132,7 @@ public class Sintactico extends  Lexico {
                                 }else if(String.valueOf(temp)=="Asignación"){
                                     //System.out.println("Se esperaba ;" + line);
                                     temp=token.getToken();
-                                    if(String.valueOf(temp) == "true" || String.valueOf(temp) == "false"){
+                                    if(String.valueOf(temp) == "TRUE" || String.valueOf(temp) == "FALSE"){
                                         temp=token.getToken();
                                         if(String.valueOf(temp) =="Punto y coma"){
                                             temp = token.getToken();
@@ -153,7 +153,7 @@ public class Sintactico extends  Lexico {
                         
                         break;
                 case 4: //Producción para tipo de dato Cadena
-                        if(String.valueOf(temp)=="#cad"){
+                        if(String.valueOf(temp)=="#CAD"){
                             temp=token.getToken();
                             if(String.valueOf(temp)=="Identificador"){
                                 temp=token.getToken();
@@ -163,11 +163,11 @@ public class Sintactico extends  Lexico {
                                 }else if(String.valueOf(temp)=="Asignación"){
                                     //System.out.println("Se esperaba ;" + line);
                                     temp=token.getToken();
-                                    if(String.valueOf(temp) == "comillas dobles"){
+                                    if(String.valueOf(temp) == "COMILLAS DOBLES"){
                                         temp=token.getToken();
                                         if(String.valueOf(temp) =="identificador"){
                                             temp=token.getToken();
-                                            if(String.valueOf(temp) == "comillas dobles"){
+                                            if(String.valueOf(temp) == "COMILLAS DOBLES"){
                                                 temp=token.getToken();
                                                 if(String.valueOf(temp)=="Punto y coma"){
                                                     temp = token.getToken();
@@ -270,9 +270,9 @@ public class Sintactico extends  Lexico {
                         }                     
                         break;
                 case 7: //Producción para sentencia Imprime
-                        if(String.valueOf(temp) == "Imprime"){
+                        if(String.valueOf(temp) == "IMPRIME"){
                             temp = token.getToken();
-                            if(String.valueOf(temp) == "Comillas"){
+                            if(String.valueOf(temp) == "COMILLAS DOBLES"){
                                 temp = token.getToken();
                                 if(String.valueOf(temp) == "Palabra clave" || String.valueOf(temp) == "Valor númerico" || String.valueOf(temp) == "Identificador"){
                                     temp = token.getToken();
@@ -389,16 +389,16 @@ public class Sintactico extends  Lexico {
                                 if(String.valueOf(temp) == "#entero"){
                                     temp=token.getToken();
                                     state = 0;//Manda a la sentencia de tipo de dato
-                                }else if(String.valueOf(temp) == "#real"){
+                                }else if(String.valueOf(temp) == "#REAL"){
                                     temp=token.getToken();
                                     state = 2; //Manda a la sentencia de tipo de dato
-                                }else if(String.valueOf(temp) == "#cad"){
+                                }else if(String.valueOf(temp) == "#CAD"){
                                     temp=token.getToken();
                                     state = 4;//Manda a la sentencia de tipo de dato
-                                }else if(String.valueOf(temp) == "#bool"){
+                                }else if(String.valueOf(temp) == "#BOOL"){
                                     temp=token.getToken();
                                     state = 3;//Manda a la sentencia de tipo de dato
-                                }else if(String.valueOf(temp) == "Imprime"){
+                                }else if(String.valueOf(temp) == "IMPRIME"){
                                     temp=token.getToken();
                                     state = 7;//Manda a la sentencia Imprimir
                                 }else if(String.valueOf(temp) == "Identificador"){
