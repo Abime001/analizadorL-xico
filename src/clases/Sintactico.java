@@ -37,22 +37,20 @@ public class Sintactico extends  Lexico {
         line++;
         int state = 0;
         Object temp=token.getToken();
+        Object temp2=token.getLastToken();
         while (temp!=null) {
             switch (state) {
                 case 0:
-                        if(String.valueOf(temp)=="Símbolo del Limite"){
-                            System.out.println("hola Abi");
+                        if(String.valueOf(temp)=="inicia" && String.valueOf(temp2)=="termina"){
+                            System.out.println("okis");
                             state=1;
-                        } else{
-                            System.out.println("adios nnnnn");
-                        }
+                        } 
                         temp=token.getToken();
                         break;
                         
                 case 1:                    
-                        if (String.valueOf(temp)=="Operadores"){
-                            System.out.println("hola ale");
-                        }
+                        
+                        System.out.println("hola");                      
                         temp=token.getToken();
                         break;
             }

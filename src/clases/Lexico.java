@@ -8,6 +8,7 @@ Fecha: 30-Nov-2021
 package clases;
 import java.util.LinkedList;
 import java.util.ArrayList;
+
 public class Lexico {
     LinkedList<Character> list1=new LinkedList<>();
     LinkedList<Character> list2=new LinkedList<>();
@@ -44,6 +45,7 @@ public class Lexico {
             v=true;
         return v;
     }
+
     public void Analizar() {
         line++;
         int state = 0;
@@ -114,9 +116,9 @@ public class Lexico {
                         list2.removeLast();
                     } else {
                         if(c2 != ' '){
-                            System.out.println("Irreconocible");
-                            LGUI.t2.append("Irreconocible");
-                            LGUI.t2.append("\r\n");
+                            //System.out.println("Irreconocible");
+                            //LGUI.t2.append("Irreconocible");
+                            //LGUI.t2.append("\r\n");
                             list2.clear();
                             continue;
                         }
@@ -168,9 +170,9 @@ public class Lexico {
                         state = 5;
                     else {
                         if(c2 != ' '){
-                            System.out.println("Irreconocible");
+                            /*System.out.println("Irreconocible");
                             LGUI.t2.append("Irreconocible");
-                            LGUI.t2.append("\r\n");
+                            LGUI.t2.append("\r\n");*/
                             list2.clear();
                             continue;
                         }
@@ -193,10 +195,10 @@ public class Lexico {
                         state = 3;
                     else {
                         if(c2 != ' ')
-                        System.out.println("Irreconocible");
+                        /*System.out.println("Irreconocible");
                         LGUI.t2.append("Irreconocible");
                         LGUI.t2.append("\r\n");
-                        list2.clear();
+                        list2.clear();*/
                         continue;
                     }
                     break;
@@ -207,9 +209,9 @@ public class Lexico {
                         state = 8;
                     else {
                         System.out.println("Irreconocible");
-                        LGUI.t2.append("Irreconocible");
+                        /*LGUI.t2.append("Irreconocible");
                         LGUI.t2.append("\r\n");
-                        list2.clear();
+                        list2.clear();*/
                         continue;
                     }
                     break;
@@ -731,7 +733,7 @@ public class Lexico {
                     token.setType("Mayor que");
                     token.setValor(666);
                     token.setLine(line);
-                    LGUI.t2.append(token.toString());
+                      LGUI.t2.append(token.toString());
                     LGUI.t2.append("\r\n");
                     list2.clear();
                     state = 0;

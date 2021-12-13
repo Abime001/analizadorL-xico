@@ -61,7 +61,7 @@ public class Token {
             else
                 return null;
         }
-        return temp.obtenerType(); //Valor para enviar a las listas Token
+        return temp.obtenerNombre(); //Valor para enviar a las listas Token
     }
          
     public void eliminarFinalListaTokens(){
