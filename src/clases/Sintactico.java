@@ -229,7 +229,7 @@ public class Sintactico extends  Lexico {
                         }                     
                         break;
                 case 6: //Producción para sentenica Entonces
-                        if(String.valueOf(temp)=="ENTONCES"){ //Puede ser palabra clave
+                        if(String.valueOf(temp)=="ENTONCES"){ //Puede ser palabra clave 
                             temp=token.getToken();
                             if(String.valueOf(temp)=="Paren abre"){
                                 temp=token.getToken();
@@ -345,7 +345,7 @@ public class Sintactico extends  Lexico {
                             }
                         break;
                 case 9://Producción para sentencia While
-                        if(String.valueOf(temp) == "MIENTRAS"){
+                        if(String.valueOf(temp) == "MIENTRAS"){ //mientras
                             temp = token.getToken();
                             if(String.valueOf(temp) == "Paren abre"){
                                 temp = token.getToken();
@@ -382,7 +382,7 @@ public class Sintactico extends  Lexico {
                             }
                         break;
                 case 10: //Producción para Hacer
-                        if(String.valueOf(temp) == "HACER"){
+                        if(String.valueOf(temp) == "HACER"){ //hacer //mientras(adsasdfasdfasd) hacer(asdadsdfasd)
                             temp = token.getToken();
                             if(String.valueOf(temp) == "Paren abre"){
                                 temp=token.getToken();
@@ -410,7 +410,7 @@ public class Sintactico extends  Lexico {
                                     temp = token.getToken();
                                     state = 9;
                                 }else{
-                                    line = token.getLine(); 
+                                    line = token.getLine();
                                     System.out.println("Se esperaba ')'. Linea: " + line);
                                 }
 
@@ -425,7 +425,7 @@ public class Sintactico extends  Lexico {
                         break;
                 
                 case 11: //Producción para asignación
-                        if(String.valueOf(temp) == "Identificador"){
+                        if(String.valueOf(temp) == "Identificador"){// s = 5 * (a+b);
                             temp = token.getToken();
                             if(String.valueOf(temp) == "Asignación"){
                                 temp = token.getToken();
