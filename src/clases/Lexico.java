@@ -115,10 +115,10 @@ public class Lexico {
                     }else if(c2 == '#'){
                         state = 71;                        
                     }else if(String.valueOf(c2).equals("\"")){
-                        state = 96;
+                        state = 102;
                         Readout();
                     }else if(String.valueOf(c2).equals("'")){
-                        state = 97;
+                        state = 103;
                         Readout();
                     }else if(esSimboloFinalLinea(c2)){
                         list2.removeLast();
@@ -170,7 +170,7 @@ public class Lexico {
                             state=96;
                             Readout();
                         }
-                        else if (s.equals("sino")){
+                        else if (s.equals("sno")){
                             state=97;
                             Readout();
                         }
@@ -438,7 +438,7 @@ public class Lexico {
 
                 case 23: // /
                     token.setName(GetList2());
-                    token.setType("Operador divición");
+                    token.setType("Operador división");
                     token.setValor(666);
                     token.setLine(line);
                     LGUI.t2.append(token.toString());
@@ -1080,7 +1080,19 @@ public class Lexico {
                 case 93:
                         String c3 = GetList2();
                         token.setName(c3.trim());
-                        token.setType("MIENTRAS"); //Palabras clave de la sentencia
+                        token.setType("ENTONCES"); //Palabras clave de la sentencia
+                        token.setValor(90);
+                        token.setLine(line);
+                        LGUI.t2.append(token.toString());
+                        LGUI.t2.append("\r\n");
+                        list2.clear();
+                        state = 0;
+                        break;
+                       
+                case 96:
+                        String c4 = GetList2();
+                        token.setName(c4.trim());
+                        token.setType("HACER"); //Palabras clave de la sentencia
                         token.setValor(90);
                         token.setLine(line);
                         LGUI.t2.append(token.toString());
@@ -1089,10 +1101,10 @@ public class Lexico {
                         state = 0;
                         break;
                         
-                case 95:
-                        String c5 = GetList2();
-                        token.setName(c5.trim());
-                        token.setType("HACER"); //Palabras clave de la sentencia
+                case 97:
+                        String c7 = GetList2();
+                        token.setName(c7.trim());
+                        token.setType("SINO"); //Palabras clave de la sentencia
                         token.setValor(90);
                         token.setLine(line);
                         LGUI.t2.append(token.toString());
@@ -1101,7 +1113,7 @@ public class Lexico {
                         state = 0;
                         break;                                                           
                         
-                case 96:
+                case 102:
                         String f1 = GetList2();
                         token.setName(f1.trim());
                         token.setType("COMILLAS DOBLES"); //Palabras clave de la sentencia
@@ -1113,7 +1125,7 @@ public class Lexico {
                         state = 0;
                         break;                                                           
                         
-                case 97:
+                case 103:
                         String f2 = GetList2();
                         token.setName(f2.trim());
                         token.setType("COMILLA SIMPLE"); //Palabras clave de la sentencia

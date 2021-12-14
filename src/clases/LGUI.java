@@ -1,156 +1,266 @@
 /*
-Archivo: LGUI.java
-Materia: LENGUAJES Y AUTÓMATAS II
-Programa: 3.2 Analizador Lexico Básico
-Descripción: Se crea la Interfaz gráfica de usuario y se le asignan los métodos a los botones correspondientes
-Fecha: 30-Nov-2021
-*/
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package clases;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
-import java.awt.*;
+import clases.Lexico;
+import clases.Sintactico;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.StringReader;
+import javax.swing.JFrame;
 
-public class LGUI extends JFrame {
-    JTextArea t1;
-    static JTextArea t2;
-    JTextArea jtable;
-    static JTextArea jsyntax;
-    JButton b1;
-        ImageIcon btnCerrar = new ImageIcon("src/clases/Images/cerrar.png");
-    JButton b2;
-        ImageIcon btnAnalizar = new ImageIcon("src/clases/Images/analizar.png");
-    JButton b3;
-        ImageIcon btnLimpiar = new ImageIcon("src/clases/Images/limpiar.png");
-    JPanel jp1;
-    JPanel jpc1;
-    JPanel jph1;
-    JPanel jph2;
-    JPanel jpc2;
-    JPanel jph21;
-    JPanel jph22;
-
-    JPanel contendor_syntax;
-    JPanel tabla;
-    JPanel syntax;
-    
-    JLabel lb3;
-    JLabel lb4;
-    JLabel lb1;
-    JLabel lb2;
+/**
+ *
+ * @author Iltze
+ */
+public class LGUI extends javax.swing.JFrame {
+  
     BufferedReader input = null;
     Lexico lexico;
     Sintactico sintactico;
-
+    NumeroLinea numeroLinea;
+    
     public LGUI() {
         JFrame jf = new JFrame();
         jf.setTitle("Analizador sintáctico p/Lenguaje propio - Equipo 1");
-        Container c = jf.getContentPane();
-        c.setBackground(Color.black);
-        t1 = new JTextArea(10, 35);
-        t2 = new JTextArea(10, 35);
-        jtable = new JTextArea(10, 35);
-        jsyntax = new JTextArea(10,35);
-        lb1 = new JLabel("Ingresa el texto a analizar");
-        lb1.setForeground(Color.WHITE);
-        lb2 = new JLabel("Resultado del análisis léxico", SwingConstants.CENTER);
-        lb2.setForeground(Color.WHITE);
-        lb3 = new JLabel("Tabla de símbolos", SwingConstants.CENTER);
-        lb3.setForeground(Color.WHITE);
-        lb4 = new JLabel("Resultado de analisis sintáctico", SwingConstants.CENTER);
-        lb4.setForeground(Color.WHITE);
-        JScrollPane js1=new JScrollPane(t1);
-        JScrollPane js2=new JScrollPane(t2);
-        js1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        js2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        t1.setLineWrap(true);
-        t1.setSize(400, 300);
-        t2.setSize(400, 300);
-        b1 = new JButton(" CERRAR");
-            b1.setIcon(btnCerrar);
-            b1.setIconTextGap(2);
-            b1.setHorizontalAlignment(SwingConstants.CENTER);
-            b1.setVerticalAlignment(SwingConstants.CENTER);
-        b2 = new JButton(" ANALIZAR");
-            b2.setIcon(btnAnalizar);
-            b2.setIconTextGap(2);
-            b2.setHorizontalAlignment(SwingConstants.CENTER);
-            b2.setVerticalAlignment(SwingConstants.CENTER);
-        b3=new JButton(" LIMPIAR");
-            b3.setIcon(btnLimpiar);
-            b3.setIconTextGap(2);
-            b3.setHorizontalAlignment(SwingConstants.CENTER);
-            b3.setVerticalAlignment(SwingConstants.CENTER);
-        b2.addActionListener(this::actionPerformed);
-        b1.addActionListener(this::actionPerformed);
-        b3.addActionListener(this::actionPerformed);
-        //paneles syntac
-        JScrollPane jspsyn = new JScrollPane(jsyntax);
-        JScrollPane jsptab = new JScrollPane(jtable);
-        jsptab.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        jspsyn.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        jtable.setLineWrap(true);
-        jtable.setSize(400, 300);
-        jsyntax.setSize(400, 300);
-
-        jpc2 = new JPanel(); //Panel para etiquetas de syntax
-        this.jpc2.setBackground(Color.darkGray);
-        jph21 = new JPanel();
-            jph21.add(lb3);
-            this.jph21.setBorder(new EmptyBorder(0, 0, 0, 200));
-            this.jph21.setBackground(Color.black);
-        jph22 = new JPanel();
-            jph21.add(lb4);
-            this.jph22.setBorder(new EmptyBorder(0, 0, 0, 200));
-            this.jph22.setBackground(Color.black);
-        jpc2.add(jph21);
-        jpc2.add(jph22);
-        contendor_syntax = new JPanel(); //COntendor syntax para lb y jtxt
-            contendor_syntax.add(jpc2, BorderLayout.NORTH);
-            contendor_syntax.add(jsptab, BorderLayout.WEST);
-            contendor_syntax.add(jspsyn, BorderLayout.EAST);
-            
-        jpc1 = new JPanel(); //Contenedor top labels
-        this.jpc1.setBackground(Color.black);
-        jph1 = new JPanel();
-            jph1.add(lb1);
-            this.jph1.setBorder(new EmptyBorder(0, 0, 0, 200));
-            this.jph1.setBackground(Color.black);
-        jph2 = new JPanel();
-            jph2.add(lb2);
-            this.jph2.setBorder(new EmptyBorder(0, 100, 0, 0));
-            this.jph2.setBackground(Color.black);
-        jpc1.add(jph1);
-        jpc1.add(jph2);
-        jp1 = new JPanel(); //Contenedor bottom botonera
-        this.jp1.setBackground(Color.black);
-        jp1.add(b2);
-        jp1.add(b3);
-        jp1.add(b1);
-        c.add(js1, BorderLayout.WEST);
-        c.add(js2, BorderLayout.EAST);
-        c.add(jp1, BorderLayout.SOUTH);
-        c.add(jpc1, BorderLayout.NORTH);
-        //c.add(contendor_syntax, BorderLayout.SOUTH);
-        jf.setSize(850, 400);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.setVisible(true);
-        jf.setLocation(250, 200);
+        initComponents();        
+        numeroLinea = new NumeroLinea(t1);
+        jScrollPane1.setRowHeaderView(numeroLinea);
     }
 
-    public void actionPerformed(ActionEvent e) {
-        Object obj = e.getSource();
-        if (obj == b1) {
-            System.exit(0);
-        }
-        if(obj==b3){ //LIMPIAR
-           // t1.setText("");
-            t2.setText("");
-        }
-        if (obj == b2) { //El proceso de análisis se describe en análisis
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        t1 = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        t2 = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        t3 = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        t4 = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        b3 = new javax.swing.JButton();
+        b2 = new javax.swing.JButton();
+        b1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+
+        jCheckBox1.setText("jCheckBox1");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 51, 153));
+        setLocation(new java.awt.Point(10, 10));
+        setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(0, 51, 153));
+
+        t1.setColumns(20);
+        t1.setFont(new java.awt.Font("Calibri", 0, 13)); // NOI18N
+        t1.setRows(5);
+        jScrollPane1.setViewportView(t1);
+
+        t2.setColumns(20);
+        t2.setRows(5);
+        jScrollPane2.setViewportView(t2);
+
+        t3.setColumns(20);
+        t3.setRows(5);
+        jScrollPane3.setViewportView(t3);
+
+        t4.setColumns(20);
+        t4.setRows(5);
+        jScrollPane4.setViewportView(t4);
+
+        jLabel1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("INGRESA EL CÓDIGO A ANALIZAR");
+
+        jLabel2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("ANÁLISIS LÉXICO");
+
+        jLabel3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("ANÁLISIS SINTÁCTICO");
+
+        jLabel4.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("TABLA DE SÍMBOLOS");
+
+        b3.setBackground(new java.awt.Color(0, 51, 153));
+        b3.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
+        b3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clases/Images/analizar.png"))); // NOI18N
+        b3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        b3.setSelected(true);
+        b3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b3ActionPerformed(evt);
+            }
+        });
+
+        b2.setBackground(new java.awt.Color(0, 51, 153));
+        b2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clases/Images/limpiar.png"))); // NOI18N
+        b2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b2ActionPerformed(evt);
+            }
+        });
+
+        b1.setBackground(new java.awt.Color(0, 51, 153));
+        b1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clases/Images/cerrar.png"))); // NOI18N
+        b1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b1ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Calibri", 0, 36)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("ANALIZADOR SINTÁCTICO P/LENGUAJE PROPIO ");
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel7.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Equipo #1");
+
+        jLabel8.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Instituto Tecnológico de Pachuca");
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clases/Images/logoITP.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(121, 121, 121)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(171, 171, 171))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel1)
+                        .addGap(196, 196, 196)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(154, 154, 154)
+                                .addComponent(b3)
+                                .addGap(103, 103, 103)
+                                .addComponent(b2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(103, 103, 103)
+                                .addComponent(b1)
+                                .addGap(78, 78, 78))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(jLabel9)
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel6)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(b2)
+                            .addComponent(b3)
+                            .addComponent(b1))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabel6)
+                                .addGap(0, 11, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9))))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 792, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b3ActionPerformed
             lexico=new Lexico();
             sintactico=new Sintactico();
             char a[];            
@@ -165,17 +275,82 @@ public class LGUI extends JFrame {
                     //    System.out.println(c);
                         lexico.list1.offer(c);//Inserción de elementos en la cola                        
                     }
-                   // lexico.list1.offer('°');
-                  //  System.out.println(lexico.list1.toString());
                     lexico.Analizar();
                 }
             } catch (Exception ee) {
                 ee.printStackTrace();
             }       
-            //lexico.imprimeTablaTokensLex();
-            //sintactico.imprimeTablaTokensSintac();
-            //sintactico.imprimeTablaTokensReverseSintac();
-            sintactico.Analizar();
+            //lexico.imprimeTablaTokens();
+            sintactico.S();
+    }//GEN-LAST:event_b3ActionPerformed
+
+    private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
+            t2.setText("");
+            System.out.flush();
+    }//GEN-LAST:event_b2ActionPerformed
+
+    private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_b1ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(LGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(LGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(LGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(LGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new LGUI().setVisible(true);
+            }
+        });
     }
+    
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b1;
+    private javax.swing.JButton b2;
+    private javax.swing.JButton b3;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    static javax.swing.JTextArea t1;
+    static javax.swing.JTextArea t2;
+    static javax.swing.JTextArea t3;
+    static javax.swing.JTextArea t4;
+    // End of variables declaration//GEN-END:variables
 }

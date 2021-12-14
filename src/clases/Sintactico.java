@@ -35,7 +35,7 @@ public class Sintactico extends  Lexico {
         token.reiniciaGetLast();
     }
         
-    public void Analizar() {
+    public void S() {
         line++;
         String state = "index";
         Nodo cabeza = null;
@@ -49,9 +49,9 @@ public class Sintactico extends  Lexico {
                 case "index": //Producción para tipo de dato Entero                
                     if(String.valueOf(temp) == "inicio_bloque"){
                         state="inicia";
-                    }else if(String.valueOf(temp) == "termina_bloque"){
+                    }else if(String.valueOf(temp) == "fin_bloque"){
                         temp=token.getToken();
-                    }else if(String.valueOf(temp) == "continua"){
+                    }else if(String.valueOf(temp) == "siguiente_bloque"){
                         temp=token.getToken();
                     }else if(String.valueOf(temp) == "#ENTERO"){//Verifica que el valor del token sea el esperado y avanza en la regla gramtical
                         state="entero";
@@ -74,11 +74,14 @@ public class Sintactico extends  Lexico {
                     }else if(String.valueOf(temp) == "HACER"){
                         state="hacer";
                     }else if(String.valueOf(temp) == "Identificador"){// s = 5 * (a+b);
-                        state="identificador";
+                        state="identificador";                        
+                    }else if(String.valueOf(temp) == "Paren cierra"){// s = 5 * (a+b);
+                        temp=token.getToken();
                     }else{                        
                         System.out.println("Error con: "+temp+" en Linea "+token.getLine());
                         temp=null;
                     }
+                    
                     break;                    
                                             
                 case "inicia":                            
@@ -99,7 +102,6 @@ public class Sintactico extends  Lexico {
                                 if(String.valueOf(temp)=="Punto y coma"){
                                     temp = token.getToken();
                                     state = "index";
-                                    System.out.println("Entero cool sin asignación");
                                 }else if(String.valueOf(temp)=="Asignación"){
                                     //System.out.println("Se esperaba ;" + line);
                                     temp = token.getToken();
@@ -109,7 +111,6 @@ public class Sintactico extends  Lexico {
                                             temp = token.getToken();
                                             state = "index";
                                             flag=true;
-                                            System.out.println("Entero cool con asignación");     
                                         }
 
                                     }else{
@@ -199,7 +200,7 @@ public class Sintactico extends  Lexico {
                                     temp=token.getToken();
                                     if(String.valueOf(temp) == "COMILLAS DOBLES"){
                                         temp=token.getToken();
-                                        if(String.valueOf(temp) =="identificador"){
+                                        if(String.valueOf(temp) =="Identificador"){
                                             temp=token.getToken();
                                             if(String.valueOf(temp) == "COMILLAS DOBLES"){
                                                 temp=token.getToken();
@@ -227,13 +228,14 @@ public class Sintactico extends  Lexico {
                             break;
                         
                 case "si"://Producción para sentencia IF
+                            temp=token.getToken ();
                           if(String.valueOf(temp)=="Paren abre"){
                                 temp=token.getToken();
-                                if(String.valueOf(temp)=="Identificador" || String.valueOf(temp)=="Valor númerico"){
+                                if(String.valueOf(temp)=="Identificador" || String.valueOf(temp)=="Valores numéricos"){
                                     temp = token.getToken();
                                     if(String.valueOf(temp) == "Igualdad" || String.valueOf(temp) == "Mayor que" || String.valueOf(temp) == "Menor que" || String.valueOf(temp) == "Menor igual que" || String.valueOf(temp) == "Mayor igual que" || String.valueOf(temp) == "OR" || String.valueOf(temp) == "AND" || String.valueOf(temp) == "Negación" || String.valueOf(temp) == "Desigual"){
                                         temp = token.getToken();
-                                        if(String.valueOf(temp) == "Identificador" || String.valueOf(temp)=="Valor númerico"){
+                                        if(String.valueOf(temp) == "Identificador" || String.valueOf(temp)=="Valores numéricos"){
                                             temp = token.getToken();
                                             if(String.valueOf(temp) == "Paren cierra"){
                                                 temp = token.getToken();
@@ -262,21 +264,22 @@ public class Sintactico extends  Lexico {
                         break;
                         
                 case "entonces": //Producción para sentenica Entonces
+                            temp=token.getToken();
                             if(String.valueOf(temp)=="Paren abre"){
                                 temp=token.getToken();
-                                if(String.valueOf(temp) == "#entero"){
+                                if(String.valueOf(temp) == "#Entero"){
                                     temp=token.getToken();
                                     state = "index";//Manda a la sentencia de tipo de dato
-                                }else if(String.valueOf(temp) == "#real"){
+                                }else if(String.valueOf(temp) == "#Real"){
                                     temp=token.getToken();
                                     state = "index"; //Manda a la sentencia de tipo de dato
-                                }else if(String.valueOf(temp) == "#cad"){
+                                }else if(String.valueOf(temp) == "#Cad"){
                                     temp=token.getToken();
                                     state = "index";//Manda a la sentencia de tipo de dato
-                                }else if(String.valueOf(temp) == "#bool"){
+                                }else if(String.valueOf(temp) == "#Bool"){
                                     temp=token.getToken();
                                     state = "index";//Manda a la sentencia de tipo de dato
-                                }else if(String.valueOf(temp) == "Imprime"){
+                                }else if(String.valueOf(temp) == "Imprimir"){
                                     temp=token.getToken();
                                     state = "index";//Manda a la sentencia Imprimir
                                 }else if(String.valueOf(temp) == "Identificador"){
@@ -303,7 +306,7 @@ public class Sintactico extends  Lexico {
                             temp = token.getToken();
                             if(String.valueOf(temp) == "COMILLAS DOBLES"){
                                 temp = token.getToken();
-                                if(String.valueOf(temp) == "Palabra clave" || String.valueOf(temp) == "Valor númerico" || String.valueOf(temp) == "Identificador"){
+                                if(String.valueOf(temp) == "Palabra clave" || String.valueOf(temp) == "Valores numéricos" || String.valueOf(temp) == "Identificador"){
                                     temp = token.getToken();
                                     if(String.valueOf(temp) == "Punto y coma"){
                                         temp = token.getToken();
@@ -318,7 +321,7 @@ public class Sintactico extends  Lexico {
                                     System.out.println("Error el imprimir. Linea: " + line);
                                     temp=null;
                                 }
-                            }else if (String.valueOf(temp) == "Palabra clave" || String.valueOf(temp) == "Valor númerico" || String.valueOf(temp) == "Identificador"){
+                            }else if (String.valueOf(temp) == "Palabra clave" || String.valueOf(temp) == "Valores numéricos" || String.valueOf(temp) == "Identificador"){
                                 temp = token.getToken();
                                 if(String.valueOf(temp) == "Punto y coma"){
                                     temp = token.getToken();
@@ -336,21 +339,22 @@ public class Sintactico extends  Lexico {
                         break;
                         
                 case "sino"://Producción para sentenica ELSE
+                            temp=token.getToken();
                             if(String.valueOf(temp) == "Paren abre"){
                                 temp=token.getToken();
-                                if(String.valueOf(temp) == "#entero"){
+                                if(String.valueOf(temp) == "#Entero"){
                                     temp=token.getToken();
                                     state = "index";//Manda a la sentencia de tipo de dato
-                                }else if(String.valueOf(temp) == "#real"){
+                                }else if(String.valueOf(temp) == "#Real"){
                                     temp=token.getToken();
                                     state = "index"; //Manda a la sentencia de tipo de dato
-                                }else if(String.valueOf(temp) == "#cad"){
+                                }else if(String.valueOf(temp) == "#Cad"){
                                     temp=token.getToken();
                                     state = "index";//Manda a la sentencia de tipo de dato
-                                }else if(String.valueOf(temp) == "#bool"){
+                                }else if(String.valueOf(temp) == "#Bool"){
                                     temp=token.getToken();
                                     state = "index";//Manda a la sentencia de tipo de dato
-                                }else if(String.valueOf(temp) == "Imprime"){
+                                }else if(String.valueOf(temp) == "Imprimir"){
                                     temp=token.getToken();
                                     state = "index";//Manda a la sentencia Imprimir
                                 }else if(String.valueOf(temp) == "Identificador"){
@@ -377,11 +381,11 @@ public class Sintactico extends  Lexico {
                 case "while"://Producción para sentencia While
                             if(String.valueOf(temp) == "Paren abre"){
                                 temp = token.getToken();
-                                if(String.valueOf(temp)=="Identificador" || String.valueOf(temp)=="Valor númerico"){
+                                if(String.valueOf(temp)=="Identificador" || String.valueOf(temp)=="Valores numéricos"){
                                     temp = token.getToken();
                                     if(String.valueOf(temp) == "Igualdad" || String.valueOf(temp) == "Mayor que" || String.valueOf(temp) == "Menor que" || String.valueOf(temp) == "Menor igual que" || String.valueOf(temp) == "Mayor igual que" || String.valueOf(temp) == "OR" || String.valueOf(temp) == "AND" || String.valueOf(temp) == "Negación" || String.valueOf(temp) == "Desigual"){
                                         temp = token.getToken();
-                                        if(String.valueOf(temp) == "Identificador" || String.valueOf(temp)=="Valor númerico"){
+                                        if(String.valueOf(temp) == "Identificador" || String.valueOf(temp)=="Valores numéricos"){
                                             temp = token.getToken();
                                             if(String.valueOf(temp) == "Paren cierra"){
                                                 temp = token.getToken();
@@ -404,7 +408,7 @@ public class Sintactico extends  Lexico {
                                 }
                                 
                             }else{
-                                line = token.getToken();
+                                line = token.getLine();
                                 System.out.println("Se esperaba '('. Linea: " + line);
                                 temp=null;
                             }
@@ -443,7 +447,7 @@ public class Sintactico extends  Lexico {
                                 }
 
                             }else{
-                                line = token.getToken();
+                                line = token.getLine();
                                 System.out.println("Se esperaba '('. Linea: " + line);
                                 temp=null;
                             }
@@ -453,7 +457,7 @@ public class Sintactico extends  Lexico {
                             temp = token.getToken();
                             if(String.valueOf(temp) == "Asignación"){
                                 temp = token.getToken();
-                                if(String.valueOf(temp) == "Identificador" || String.valueOf(temp) == "Valor númerico"){
+                                if(String.valueOf(temp) == "Identificador" || String.valueOf(temp) == "Valores numéricos"){
                                     temp = token.getToken();
                                     if(String.valueOf(temp) == "Punto y coma"){
                                         temp = token.getToken();
@@ -461,36 +465,39 @@ public class Sintactico extends  Lexico {
                                         //falta el error si no hay Punto y coma ';'
                                     }else if(String.valueOf(temp) == "Operador suma" || String.valueOf(temp) == "Operador resta" || String.valueOf(temp) == "Operador multiplicación" || String.valueOf(temp) == "Operador división"){
                                         temp = token.getToken();
-                                        if(String.valueOf(temp) == "Identificador" || String.valueOf(temp) == "Valor númerico"){
+                                        if(String.valueOf(temp) == "Identificador" || String.valueOf(temp) == "Valores numéricos"){
                                             temp = token.getToken();
                                             if(String.valueOf(temp) == "Punto y coma"){
                                                 temp = token.getToken();
                                                 state = "index";
                                             }else{
-                                                line = token.getToken();
+                                                line = token.getLine();
                                                 System.out.println("Se esperaba ';'. Linea: " + line);
                                                 temp=null;
                                             }
                                         }else{
-                                            line = token.getToken();
+                                            line = token.getLine();
                                             System.out.println("Se esperaba un valor. Linea: " + line);
                                             temp=null;
                                         }
                                     }else{
-                                        line = token.getToken();
+                                        line = token.getLine();
                                         System.out.println("Error en la exp arit. Linea: " + line);
                                         temp=null;
                                     }
                                 }else{
-                                    line = token.getToken();
+                                    line = token.getLine();
                                     System.out.println("Se esperaba un valor. Linea: " + line);
                                     temp=null;
                                 }
-                            }else{
-                                //line = token.getToken();
-                                System.out.println("Se esperaba '='. Linea: " + line);
-                                temp=null;
-                            }                        
+                            }else if(String.valueOf(temp) == "Punto y coma"){
+                                        temp = token.getToken();
+                                        state = "index";
+                                    }else{                                        
+                                        line = token.getLine();
+                                        System.out.println("Se esperaba '='. Linea: " + line);
+                                        temp=null;
+                                    }                        
                         break;
             }
                        
