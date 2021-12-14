@@ -4,12 +4,18 @@
  * and open the template in the editor.
  */
 package clases;
-import clases.Lexico;
-import clases.Sintactico;
-import java.awt.event.ActionEvent;
+//import clases.Lexico;
+//import clases.Sintactico;
+//import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.StringReader;
+
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -316,15 +322,40 @@ public class LGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_b1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        //Se invoca el método para cargar archivo 1
+        cargarArchivoCorrecto1("C:/Users/abime/Desktop/LENG/analizadorL-xico/src/clases/archivos/correcto1.txt");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        //Se invoca el método para cargar archivo 1
+        cargarArchivoCorrecto2("C:/Users/abime/Desktop/LENG/analizadorL-xico/src/clases/archivos/correcto2.txt");
     }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        //Se invoca el método para cargar archivo 1
+        cargarArchivoIncorrecto("C:/Users/abime/Desktop/LENG/analizadorL-xico/src/clases/archivos/incorrecto.txt");
 
+    }//GEN-LAST:event_jButton3ActionPerformed
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        t1.setText("");
+        String aux = "";
+        String texto = "";
+        String resultado = "";
+        try {
+            JFileChooser file = new JFileChooser(System.getProperty("user.dir"));
+            file.showOpenDialog(this);
+            File archivo = file.getSelectedFile();;
+            if (archivo != null) {
+                FileReader archivos = new FileReader(archivo);
+                BufferedReader leer = new BufferedReader(archivos);
+                while ((aux = leer.readLine()) != null) {
+                     texto += aux + "\n";
+                }
+            leer.close();
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error Importando - " + ex);
+        }
+        t1.setText(texto);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
@@ -360,9 +391,66 @@ public class LGUI extends javax.swing.JFrame {
                 new LGUI().setVisible(true);
             }
         });
+        
     }
-    
+    public void cargarArchivoCorrecto1(String ruta1){
+        t1.setText("");
+        String aux = "";
+        String texto = "";
+            try {
+                File archivo = new File (ruta1);
+                if (archivo != null) {
+                    FileReader archivos = new FileReader(archivo);
+                    BufferedReader leer = new BufferedReader(archivos);
+                    while ((aux = leer.readLine()) != null) {
+                         texto += aux + "\n";
+                    }
+                leer.close();
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Error Importando - " + ex);
+            }
+            t1.setText(texto);
+    }
 
+    public void cargarArchivoCorrecto2(String ruta2){
+        t1.setText("");
+        String aux = "";
+        String texto = "";
+            try {
+                File archivo = new File (ruta2);
+                if (archivo != null) {
+                    FileReader archivos = new FileReader(archivo);
+                    BufferedReader leer = new BufferedReader(archivos);
+                    while ((aux = leer.readLine()) != null) {
+                         texto += aux + "\n";
+                    }
+                leer.close();
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Error Importando - " + ex);
+            }
+        t1.setText(texto);
+    }
+    public void cargarArchivoIncorrecto(String incorrecto){
+        t1.setText("");
+        String aux = "";
+        String texto = "";
+            try {
+                File archivo = new File (incorrecto);
+                if (archivo != null) {
+                    FileReader archivos = new FileReader(archivo);
+                    BufferedReader leer = new BufferedReader(archivos);
+                    while ((aux = leer.readLine()) != null) {
+                         texto += aux + "\n";
+                    }
+                leer.close();
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Error Importando - " + ex);
+            }
+        t1.setText(texto);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b1;
     private javax.swing.JButton b2;

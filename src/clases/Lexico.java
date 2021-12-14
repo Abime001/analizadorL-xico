@@ -7,7 +7,7 @@ Fecha: 30-Nov-2021
 */
 package clases;
 import java.util.LinkedList;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 public class Lexico {
     LinkedList<Character> list1=new LinkedList<>();

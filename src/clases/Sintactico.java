@@ -6,9 +6,9 @@ Descripción: Se realiza el análisis léxico
 Fecha: 30-Nov-2021
 */
 package clases;
-import java.util.LinkedList;
+//import java.util.LinkedList;
 
-import javax.sound.sampled.LineUnavailableException;
+//import javax.sound.sampled.LineUnavailableException;
 public class Sintactico extends  Lexico {
     int line=0;
     
@@ -38,7 +38,7 @@ public class Sintactico extends  Lexico {
     public void S() {
         line++;
         String state = "index";
-        Nodo cabeza = null;
+        //Nodo cabeza = null;
         Object temp=token.getToken();
         Object line = token.getLine();
         Object temp2=token.getLastToken();
