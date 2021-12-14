@@ -65,7 +65,9 @@ public class Token {
         }
         if(temp!=null){
             i=(int)temp.obtenerLine();
-            setLine(i);        }
+            setLine(i);
+            setName(String.valueOf(temp.obtenerNombre()));
+        }
         return temp.obtenerType(); //Valor para enviar a las listas Token
     }
          
