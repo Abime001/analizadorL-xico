@@ -43,6 +43,7 @@ public class LGUI extends JFrame {
     JLabel lb2;
     BufferedReader input = null;
     Lexico lexico;
+    Sintactico sintactico;
 
     public LGUI() {
         JFrame jf = new JFrame();
@@ -151,7 +152,7 @@ public class LGUI extends JFrame {
         }
         if (obj == b2) { //El proceso de análisis se describe en análisis
             lexico=new Lexico();
-            Sintactico sintactico=new Sintactico();
+            sintactico=new Sintactico();
             char a[];            
             try {
                 input = new BufferedReader(new StringReader(t1.getText()));
@@ -164,15 +165,15 @@ public class LGUI extends JFrame {
                     //    System.out.println(c);
                         lexico.list1.offer(c);//Inserción de elementos en la cola                        
                     }
-                    lexico.list1.offer('°');
+                   // lexico.list1.offer('°');
                   //  System.out.println(lexico.list1.toString());
                     lexico.Analizar();
                 }
             } catch (Exception ee) {
                 ee.printStackTrace();
             }       
-            lexico.imprimeTablaTokens();
-            sintactico.imprimeTablaTokensSintac();
+            //lexico.imprimeTablaTokensLex();
+            //sintactico.imprimeTablaTokensSintac();
             //sintactico.imprimeTablaTokensReverseSintac();
             sintactico.Analizar();
         }
