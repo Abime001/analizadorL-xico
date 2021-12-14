@@ -42,13 +42,17 @@ public class Sintactico extends  Lexico {
         Object temp=token.getToken();
         Object line = token.getLine();
         Object temp2=token.getLastToken();
+        
         boolean flag=false;
-        while (temp!=null) {            
+        while (temp!=null) {
             switch (state) {
-                case "index": //Producción para tipo de dato Entero
-                System.out.println("b1 index " +temp);
+                case "index": //Producción para tipo de dato Entero                
                     if(String.valueOf(temp) == "inicio_bloque"){
                         state="inicia";
+                    }else if(String.valueOf(temp) == "termina_bloque"){
+                        temp=token.getToken();
+                    }else if(String.valueOf(temp) == "continua"){
+                        temp=token.getToken();
                     }else if(String.valueOf(temp) == "#ENTERO"){//Verifica que el valor del token sea el esperado y avanza en la regla gramtical
                         state="entero";
                     }else if(String.valueOf(temp) == "#REAL"){
@@ -61,7 +65,7 @@ public class Sintactico extends  Lexico {
                         state="si";
                     }else if(String.valueOf(temp) == "ENTONCES"){
                         state="entonces";
-                    }else if(String.valueOf(temp) == "IMPRIME"){
+                    }else if(String.valueOf(temp) == "Imprimir"){
                         state="imprime";
                     }else if(String.valueOf(temp) == "SINO"){
                         state="sino";
@@ -71,11 +75,13 @@ public class Sintactico extends  Lexico {
                         state="hacer";
                     }else if(String.valueOf(temp) == "Identificador"){// s = 5 * (a+b);
                         state="identificador";
+                    }else{                        
+                        System.out.println("Error con: "+temp+" en Linea "+token.getLine());
+                        temp=null;
                     }
                     break;                    
                                             
-                case "inicia":
-                            temp=token.getToken();
+                case "inicia":                            
                     if(String.valueOf(temp2)=="fin_bloque"){                            
                             temp=token.getToken();
                             state ="index";
@@ -84,7 +90,7 @@ public class Sintactico extends  Lexico {
                             System.out.println("error al declarar bloque");
                             temp=null;                   
                         }                        
-                        break;
+                        break;                                           
                 
                 case "entero":    
                             temp = token.getToken();
@@ -294,6 +300,7 @@ public class Sintactico extends  Lexico {
                         break;
                         
                 case "imprime": //Producción para sentencia Imprime
+                            temp = token.getToken();
                             if(String.valueOf(temp) == "COMILLAS DOBLES"){
                                 temp = token.getToken();
                                 if(String.valueOf(temp) == "Palabra clave" || String.valueOf(temp) == "Valor númerico" || String.valueOf(temp) == "Identificador"){
@@ -321,6 +328,10 @@ public class Sintactico extends  Lexico {
                                     System.out.println("Se esperaba ' ; '. Linea: " + line);
                                     temp=null;
                                 }
+                            }else{
+                                line = token.getLine(); 
+                                System.out.println("Se esperaba ' un valor '. Linea: " + line);
+                                temp=null;
                             }
                         break;
                         
@@ -357,7 +368,7 @@ public class Sintactico extends  Lexico {
                                 }
 
                             }else{
-                                line = token.getToken();
+                                line = token.getLine();
                                 System.out.println("Se esperaba '('. Linea: " + line);
                                 temp=null;
                             }
@@ -437,8 +448,8 @@ public class Sintactico extends  Lexico {
                                 temp=null;
                             }
                         break;
-                /*
-                case "asignacion": //Producción para asignación
+                
+                case "identificador": //Producción para asignación
                             temp = token.getToken();
                             if(String.valueOf(temp) == "Asignación"){
                                 temp = token.getToken();
@@ -476,15 +487,11 @@ public class Sintactico extends  Lexico {
                                     temp=null;
                                 }
                             }else{
-                                line = token.getToken();
+                                //line = token.getToken();
                                 System.out.println("Se esperaba '='. Linea: " + line);
                                 temp=null;
-                            }
-                        }else{
-                                temp = token.getToken();
-                                state = "index";
-                            }
-                        break;*/
+                            }                        
+                        break;
             }
                        
         }

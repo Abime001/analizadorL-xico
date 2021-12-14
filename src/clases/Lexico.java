@@ -73,7 +73,7 @@ public class Lexico {
                         state = 31;
                     else if(c2 == '^')
                         state = 38;
-                    else if(c2 == '<')
+                    else if(c2 =='<')
                         state = 41;
                     else if(c2 == '>')
                         state = 47;
@@ -630,7 +630,7 @@ public class Lexico {
                     state = 0;
                     break;
                 case 41:
-                    if(c2 == '='){
+                    if('=' == c2 ){
                         state = 42;
                         Readout();
                     } else if (c2 == '<'){
@@ -692,6 +692,7 @@ public class Lexico {
                     list2.clear();
                     state = 0;
                     break;
+                    
                 case 47:
                     if(c2 == '='){
                         state = 48;

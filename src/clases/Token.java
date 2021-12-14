@@ -36,6 +36,7 @@ public class Token {
         }
         else 
             return null;
+        
         return v;                               
     }
 
@@ -52,6 +53,7 @@ public class Token {
     
     public Object ObtenerIndexListaTokens(int index){
         int cont=0;
+        int i;
         Nodo temp=cabeza;        
         while (cont<index){
             if(size>cont+1){                
@@ -61,6 +63,9 @@ public class Token {
             else
                 return null;
         }
+        if(temp!=null){
+            i=(int)temp.obtenerLine();
+            setLine(i);        }
         return temp.obtenerType(); //Valor para enviar a las listas Token
     }
          
