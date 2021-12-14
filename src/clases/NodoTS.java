@@ -10,7 +10,7 @@ public class NodoTS {
     Object name;
     Integer[] lineas = new Integer[80];
     NodoTS siguienteNodo;
-    int i=0;
+    int sizeLineas=0;
     
     public NodoTS(Object nombreTok, Object lineaTok){
         name=nombreTok;
@@ -23,8 +23,13 @@ public class NodoTS {
         return name;
     }
     
-    public Object obtenerLine(){
+    public Object obtenerLineas(){
         return lineas;
+    }
+    
+    public void setLineas(int line){
+        this.lineas[sizeLineas]=line;
+        sizeLineas++;
     }
     
     public void enlazarAlNodo(NodoTS valorSiguienteNodo){

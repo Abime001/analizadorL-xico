@@ -8,7 +8,6 @@ Fecha: 30-Nov-2021
 package clases;
 public class TablaSimbolos {
     private String name;
-    private Integer[] lineas=new Integer[80];
     NodoTS cabeza;
     int size;
     int nGet; //contador global para metodo getTablaSimbolos().
@@ -28,7 +27,7 @@ public class TablaSimbolos {
         return v;                               
     }
 
-    public Object insertar(){
+    public Object insertar(Object nom){
         Object v=null;
         if(nGet>=0){
             v=buscar(nGet);
