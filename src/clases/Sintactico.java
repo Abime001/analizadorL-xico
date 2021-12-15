@@ -6,9 +6,12 @@ Descripción: Se realiza el análisis léxico
 Fecha: 30-Nov-2021
 */
 package clases;
+import java.security.Key;
 //import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Map.Entry;
 //import javax.sound.sampled.LineUnavailableException;
 public class Sintactico extends  Lexico {
     int line=0;
@@ -144,6 +147,9 @@ public class Sintactico extends  Lexico {
                                     line = token.getLine();
                                     //Error semantico en Real
                                     System.out.print("Identificador duplicado" + line);
+                                    temp = null;
+                                    flag = false;
+                                    break;
                                 }else{
                                     symbolTable.put(String.valueOf(token.getName()), "0");
                                 }
@@ -151,7 +157,16 @@ public class Sintactico extends  Lexico {
                                 if(String.valueOf(temp)=="Punto y coma"){
                                     temp = token.getToken();
                                     state ="index";
-                                }else if(String.valueOf(temp)=="Asignación"){
+                                }else{
+                                    LGUI.t4.append("Se esperaba ' ; '. Linea: " + line);
+                                    LGUI.t4.append("\r\n");
+                                    line = token.getLine(); 
+                                    System.out.println("Se esperaba ' ; '. Linea: " + line);
+                                    temp=null;
+                                    flag=false;
+                                    break;
+                                }
+                                /*if(String.valueOf(temp)=="Asignación"){
                                     temp=token.getToken();
                                     if(String.valueOf(temp) == "Valores numéricos"){
                                         temp=token.getToken();
@@ -166,7 +181,7 @@ public class Sintactico extends  Lexico {
                                         System.out.println("Se esperaba un número de tipo real. Linea: " + line);
                                         temp=null;                                        
                                     }
-                                }
+                                }*/
 
                             } else{
                                 LGUI.t4.append("falta identificador en variable. Linea: " + line);
@@ -184,14 +199,16 @@ public class Sintactico extends  Lexico {
                                     line = token.getLine();
                                     //Error semantico en Bool
                                     System.out.print("Identificador duplicado" + line);
+                                    temp=null;
+                                    flag = false;
+                                    break;
                                 }else{
-                                    symbolTable.put(String.valueOf(token.getName()), "0");
+                                    symbolTable.put(String.valueOf(token.getName()), "TRUE");
                                 }
                                 temp=token.getToken();
                                 if(String.valueOf(temp)=="Punto y coma"){
                                     temp = token.getToken();
                                     state = "index";
-                                    flag = true;
                                 }/*else if(String.valueOf(temp)=="Asignación"){
                                     //System.out.println("Se esperaba ;" + line);
                                     temp=token.getToken();
@@ -223,13 +240,31 @@ public class Sintactico extends  Lexico {
                 case "cad": //Producción para tipo de dato Cadena
                             temp=token.getToken();
                             if(String.valueOf(temp)=="Identificador"){
+                                if(symbolTable.containsKey(token.getName())){
+                                    line = token.getLine();
+                                    //Error semantico en Bool
+                                    System.out.print("Identificador duplicado" + line);
+                                    temp=null;
+                                    flag = false;
+                                    break;
+                                }else{
+                                    symbolTable.put(String.valueOf(token.getName()), "0");
+                                }
                                 temp=token.getToken();
                                 if(String.valueOf(temp)=="Punto y coma"){
                                     temp = token.getToken();
                                     state = "index";
-                                }else if(String.valueOf(temp)=="Asignación"){
+                                }else{ 
+                                    LGUI.t4.append("Se esperaban comillas. Linea: " + line);
+                                    LGUI.t4.append("\r\n");
+                                    line = token.getLine(); 
+                                    System.out.println("Se esperaban comillas. Linea: " + line);
+                                    temp=null;   
+                                }/*else if(String.valueOf(temp)=="Asignación"){
                                     //System.out.println("Se esperaba ;" + line);
                                     temp=token.getToken();
+
+
                                     if(String.valueOf(temp) == "COMILLAS DOBLES"){
                                         temp=token.getToken();
                                         if(String.valueOf(temp) =="Identificador"){
@@ -255,7 +290,7 @@ public class Sintactico extends  Lexico {
                                         System.out.println("Se esperaban comillas. Linea: " + line);
                                         temp=null;
                                     }
-                                }
+                                }*/
                             } else{
                                 LGUI.t4.append("falta identificador en variable. Linea: " + line);
                                 LGUI.t4.append("\r\n");
@@ -375,7 +410,19 @@ public class Sintactico extends  Lexico {
                                     System.out.println("Error el imprimir. Linea: " + line);
                                     temp=null;
                                 }
-                            }else if (String.valueOf(temp) == "Palabra clave" || String.valueOf(temp) == "Valores numéricos" || String.valueOf(temp) == "Identificador"){
+                            }else if (String.valueOf(temp) == "Identificador"){
+                                if(symbolTable.containsKey(token.getName())){
+                                    String getValueFromKey = getSingleValueFromKey(symbolTable, token.getName());
+                                    System.out.println("Variable  = " + getValueFromKey);
+                                    
+                                }else{
+                                    line = token.getLine();
+                                    //Error semantico en Bool
+                                    System.out.print("Variable no declarada" + line);
+                                    temp=null;
+                                    flag = false;
+                                    break;
+                                }
                                 temp = token.getToken();
                                 if(String.valueOf(temp) == "Punto y coma"){
                                     temp = token.getToken();
@@ -387,6 +434,12 @@ public class Sintactico extends  Lexico {
                                     System.out.println("Se esperaba ' ; '. Linea: " + line);
                                     temp=null;
                                 }
+                            }else if(String.valueOf(temp) == "Valores numéricos"){
+                                System.out.println("Imprime = " + token.getName());
+                                temp = token.getToken();
+                                state = "index";
+                                flag=true;
+
                             }else{
                                 LGUI.t4.append("Se esperaba ' un valor '. Linea: " + line);
                                 LGUI.t4.append("\r\n");
@@ -528,28 +581,108 @@ public class Sintactico extends  Lexico {
                         break;
                 
                 case "identificador": //Producción para asignación
-                            temp = token.getToken();
+                            String auxName = "";
+                            int auxValue=0;
+                            int aux3=0;
+                            int aux4=0;
+                            int res = 0;
+                            if(symbolTable.containsKey(token.getName())){
+                                String getValueFromKey = getSingleValueFromKey(symbolTable, token.getName());
+                                auxName = token.getName();
+                                auxValue = Integer.parseInt(getValueFromKey);
+                                temp = token.getToken();
+                            }else{
+                                line = token.getLine();
+                                //Error semantico en Bool
+                                System.out.print("Variable no declarada" + line);
+                                temp=null;
+                                flag = false;
+                                break;
+                            }
+                            
                             if(String.valueOf(temp) == "Asignación"){
                                 temp = token.getToken();
-                                if(String.valueOf(temp) == "Identificador" || String.valueOf(temp) == "Valores numéricos"){
-                                    temp = token.getToken();
+                                if(String.valueOf(temp) == "Identificador"){
+                                    if(symbolTable.containsKey(token.getName())){
+                                        String getValueFromKey = getSingleValueFromKey(symbolTable, token.getName());
+                                        aux3 = Integer.parseInt(getValueFromKey);
+                                        symbolTable.put(auxName, getValueFromKey);
+                                        temp = token.getToken();
+                                    }else{
+                                        line = token.getLine();
+                                        //Error semantico en Bool
+                                        System.out.print("Variable no declarada" + line);
+                                        temp=null;
+                                        flag = false;
+                                        break;
+                                    }
                                     if(String.valueOf(temp) == "Punto y coma"){
                                         temp = token.getToken();
                                         state = "index";
-                                        //falta el error si no hay Punto y coma ';'
-                                    }else if(String.valueOf(temp) == "Operador suma" || String.valueOf(temp) == "Operador resta" || String.valueOf(temp) == "Operador multiplicación" || String.valueOf(temp) == "Operador división"){
+                                        flag=true;
+                                    }else if(String.valueOf(temp) == "Operador suma" || String.valueOf(temp) == "Operador resta" ||  String.valueOf(temp) == "Operador multiplicación" || String.valueOf(temp) == "Operador división"){
+                                        String auxOpe =String.valueOf(temp);
                                         temp = token.getToken();
-                                        if(String.valueOf(temp) == "Identificador" || String.valueOf(temp) == "Valores numéricos"){
+                                        if(String.valueOf(temp) == "Identificador"){
+                                            if(symbolTable.containsKey(token.getName())){
+                                                String getValueFromKey = getSingleValueFromKey(symbolTable, token.getName());
+                                                aux4 = Integer.parseInt(getValueFromKey);
+                                                if(auxOpe == "+"){
+                                                    res = auxValue + aux4;
+                                                }else if(auxOpe == "-"){
+                                                    res = auxValue - aux4;
+                                                } else if(auxOpe == "*"){
+                                                    res = auxValue * aux4;
+                                                }else if(auxOpe == "/"){
+                                                    res = auxValue / aux4;
+                                                }
+                                                symbolTable.put(auxName, String.valueOf(res));
+                                                temp = token.getToken();
+                                                if(String.valueOf(temp) == "Punto y coma"){
+                                                    temp = token.getToken();
+                                                    state = "index";
+                                                    flag=true;
+                                                }else{
+                                                    LGUI.t4.append("Se esperaba ';'. Linea: " + line);
+                                                    LGUI.t4.append("\r\n");
+                                                    line = token.getLine();
+                                                    System.out.println("Se esperaba ';'. Linea: " + line);
+                                                    temp=null;
+                                                    break;
+                                                }
+                                            }else{
+                                                line = token.getLine();
+                                                //Error semantico en Bool
+                                                System.out.print("Variable no declarada" + line);
+                                                temp=null;
+                                                flag = false;
+                                                break;
+                                            }
+                                   
+                                        }else if(String.valueOf(temp) == "Valores númerico"){
+                                            aux4 = Integer.parseInt(token.getName());
+                                            if(auxOpe == "+"){
+                                                res = auxValue + aux4;
+                                            }else if(auxOpe == "-"){
+                                                res = auxValue - aux4;
+                                            } else if(auxOpe == "*"){
+                                                res = auxValue * aux4;
+                                            }else if(auxOpe == "/"){
+                                                res = auxValue / aux4;
+                                            }
+                                            symbolTable.put(auxName, String.valueOf(res));
                                             temp = token.getToken();
                                             if(String.valueOf(temp) == "Punto y coma"){
                                                 temp = token.getToken();
                                                 state = "index";
+                                                flag=true;
                                             }else{
                                                 LGUI.t4.append("Se esperaba ';'. Linea: " + line);
                                                 LGUI.t4.append("\r\n");
                                                 line = token.getLine();
                                                 System.out.println("Se esperaba ';'. Linea: " + line);
                                                 temp=null;
+                                                break;
                                             }
                                         }else{
                                             LGUI.t4.append("Se esperaba un valor. Linea: " + line);
@@ -557,52 +690,140 @@ public class Sintactico extends  Lexico {
                                             line = token.getLine();
                                             System.out.println("Se esperaba un valor. Linea: " + line);
                                             temp=null;
+                                            flag=false;
                                         }
                                     }else{
-                                        LGUI.t4.append("Error en la exp arit. Linea: " + line);
+                                        LGUI.t4.append("Se esperaba un ' operador '. Linea: " + line);
                                         LGUI.t4.append("\r\n");
                                         line = token.getLine();
-                                        System.out.println("Error en la exp arit. Linea: " + line);
+                                        System.out.println("Se esperaba ' operador '. Linea: " + line);
                                         temp=null;
+                                        flag=false;
+                                        break;
                                     }
-                                }else{
-                                    LGUI.t4.append("Se esperaba un valor. Linea: " + line);
-                                    LGUI.t4.append("\r\n");
-                                    line = token.getLine();
-                                    System.out.println("Se esperaba un valor. Linea: " + line);
-                                    temp=null;
-                                }
-                            }else if(String.valueOf(temp) == "Punto y coma"){
+                                }else if(String.valueOf(temp)== "Valores númericos"){
+                                    //aux3 = Integer.parseInt(token.getName());
+                                    symbolTable.put(auxName, token.getName());
+                                    temp = token.getToken();
+                                    if(String.valueOf(temp) == "Punto y coma"){
                                         temp = token.getToken();
                                         state = "index";
-                                    }else{             
-                                        LGUI.t4.append("Se esperaba '='. Linea: " + line);
-                                        LGUI.t4.append("\r\n");                           
+                                        flag=true;
+                                    }else if(String.valueOf(temp) == "Operador suma" || String.valueOf(temp) == "Operador resta" ||  String.valueOf(temp) == "Operador multiplicación" || String.valueOf(temp) == "Operador división"){
+                                        String auxOpe =String.valueOf(temp);
+                                        temp = token.getToken();
+                                        if(String.valueOf(temp) == "Identificador"){
+                                            if(symbolTable.containsKey(token.getName())){
+                                                String getValueFromKey = getSingleValueFromKey(symbolTable, token.getName());
+                                                aux4 = Integer.parseInt(getValueFromKey);
+                                                if(auxOpe == "+"){
+                                                    res = auxValue + aux4;
+                                                }else if(auxOpe == "-"){
+                                                    res = auxValue - aux4;
+                                                } else if(auxOpe == "*"){
+                                                    res = auxValue * aux4;
+                                                }else if(auxOpe == "/"){
+                                                    res = auxValue / aux4;
+                                                }
+                                                symbolTable.put(auxName, String.valueOf(res));
+                                                temp = token.getToken();
+                                                if(String.valueOf(temp) == "Punto y coma"){
+                                                    temp = token.getToken();
+                                                    state = "index";
+                                                    flag=true;
+                                                }else{
+                                                    LGUI.t4.append("Se esperaba ';'. Linea: " + line);
+                                                    LGUI.t4.append("\r\n");
+                                                    line = token.getLine();
+                                                    System.out.println("Se esperaba ';'. Linea: " + line);
+                                                    temp=null;
+                                                    break;
+                                                }
+                                            }else{
+                                                line = token.getLine();
+                                                //Error semantico en Bool
+                                                System.out.print("Variable no declarada" + line);
+                                                temp=null;
+                                                flag = false;
+                                                break;
+                                            }
+                                   
+                                        }else if(String.valueOf(temp) == "Valores númerico"){
+                                            aux4 = Integer.parseInt(token.getName());
+                                            if(auxOpe == "+"){
+                                                res = auxValue + aux4;
+                                            }else if(auxOpe == "-"){
+                                                res = auxValue - aux4;
+                                            } else if(auxOpe == "*"){
+                                                res = auxValue * aux4;
+                                            }else if(auxOpe == "/"){
+                                                res = auxValue / aux4;
+                                            }
+                                            symbolTable.put(auxName, String.valueOf(res));
+                                            temp = token.getToken();
+                                            if(String.valueOf(temp) == "Punto y coma"){
+                                                temp = token.getToken();
+                                                state = "index";
+                                                flag=true;
+                                            }else{
+                                                LGUI.t4.append("Se esperaba ';'. Linea: " + line);
+                                                LGUI.t4.append("\r\n");
+                                                line = token.getLine();
+                                                System.out.println("Se esperaba ';'. Linea: " + line);
+                                                temp=null;
+                                                break;
+                                            }
+                                        }else{
+                                            LGUI.t4.append("Se esperaba un valor. Linea: " + line);
+                                            LGUI.t4.append("\r\n");
+                                            line = token.getLine();
+                                            System.out.println("Se esperaba un valor. Linea: " + line);
+                                            temp=null;
+                                            flag=false;
+                                        }
+                                    }else{
+                                        LGUI.t4.append("Se esperaba ';'. Linea: " + line);
+                                        LGUI.t4.append("\r\n");
                                         line = token.getLine();
-                                        System.out.println("Se esperaba '='. Linea: " + line);
+                                        System.out.println("Se esperaba ';'. Linea: " + line);
                                         temp=null;
-                                    }                        
+                                        flag=false;
+                                        break;
+                                    }
+
+                                }
+                            }else{
+                                LGUI.t4.append("Se esperaba '='. Linea: " + line);
+                                LGUI.t4.append("\r\n");                           
+                                line = token.getLine();
+                                System.out.println("Se esperaba '='. Linea: " + line);
+                                temp=null;
+                                flag = false;
+                            }                
                         break;
             }
                        
         }
-        if(flag){
-<<<<<<< HEAD
-        System.out.println("\033[32m BUID SUCCESS ");
+        if(flag==true){
+            System.out.println("\033[32m BUILD SUCCESS ");
             LGUI.t4.append("\033[32m  BUILD SUCCESS!");
-            LGUI.t4.append("\r\n");  }
-    }
-        
-    
-=======
-        System.out.println("\033[32m BUILD SUCCESS ");
-            LGUI.t4.append("\033[32m  BUILD SUCCESS!");
+            LGUI.t4.append("\r\n");
+        }else{
+            System.out.println("ERROR AL COMPILAR");
+            LGUI.t4.append("ERROR AL COMPILAR");
             LGUI.t4.append("\r\n");
         }
         for (Map.Entry<String, String> entry : symbolTable.entrySet()) {
             System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
         }
     }
-       
->>>>>>> 0c92441d97e0873cd923bbd2b413f31e80ca3fb8
+
+    public static <K, V> V getSingleValueFromKey(Map<K, V> map, K key) {
+        for (Map.Entry<K, V> entry : map.entrySet()) {
+            if (Objects.equals(key, entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+        return null;
+    }   
 }
