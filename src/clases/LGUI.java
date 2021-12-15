@@ -309,7 +309,7 @@ public class LGUI extends javax.swing.JFrame {
                 ee.printStackTrace();
             }       
             //lexico.imprimeTablaTokens();
-            sintactico.imprimeTablaTokensSintac();
+            //sintactico.imprimeTablaTokensSintac();
             sintactico.S();
             
     }//GEN-LAST:event_b3ActionPerformed

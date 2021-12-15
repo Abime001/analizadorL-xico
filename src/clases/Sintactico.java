@@ -7,12 +7,15 @@ Fecha: 30-Nov-2021
 */
 package clases;
 //import java.util.LinkedList;
-
+import java.util.HashMap;
+import java.util.Map;
 //import javax.sound.sampled.LineUnavailableException;
 public class Sintactico extends  Lexico {
     int line=0;
-    
+    Map <String, String> symbolTable = new HashMap<String, String>();
+
     public Sintactico(){
+
     }
     
     public void imprimeTablaTokensSintac(){
@@ -36,6 +39,7 @@ public class Sintactico extends  Lexico {
     }
         
     public void S() {
+        
         line++;
         String state = "index";
         //Nodo cabeza = null;
@@ -102,36 +106,29 @@ public class Sintactico extends  Lexico {
                 case "entero":    
                             temp = token.getToken();
                             if(String.valueOf(temp)=="Identificador"){
+                                if(symbolTable.containsKey(token.getName())){
+                                    line = token.getLine();
+                                    //Error semantico
+                                    System.out.println("Identificador duplicado " + line);
+                                    temp = null;
+                                    flag=false;
+                                    break;
+                                    
+                                }else{
+                                    symbolTable.put(String.valueOf(token.getName()), "0");
+                                }
                                 temp = token.getToken();
                                 if(String.valueOf(temp)=="Punto y coma"){
                                     temp = token.getToken();
                                     state = "index";
-                                }else if(String.valueOf(temp)=="Asignación"){
-                                    //System.out.println("Se esperaba ;" + line);
-                                    temp = token.getToken();
-                                    if(String.valueOf(temp) == "Valores numéricos"){
-                                        temp = token.getToken();
-                                        if(String.valueOf(temp) =="Punto y coma"){
-                                            temp = token.getToken();
-                                            state = "index";
-                                            flag=true;
-                                        }
-
-                                    }else{
-                                        line = token.getLine();
-                                        LGUI.t4.append("Se esperaba un número entero. Linea: " + line);
-                                        LGUI.t4.append("\r\n");   
-                                        System.out.println("Se esperaba un número entero. Linea: " + line);
-                                        temp=null;
-                                    }
-                                }
-                                else{ 
+                                    flag=true;
+                                }else{ 
                                     LGUI.t4.append("Error al declarar Sentencia. Linea: " + line);
                                     LGUI.t4.append("\r\n");  
                                     System.out.println("Error al declarar Sentencia. Linea: " + line);
                                     temp=null;
                                 }
-                            } else{
+                            }else{
                                 LGUI.t4.append("falta identificador en variable. Linea: " + line);
                                 LGUI.t4.append("\r\n");  
                                 line = token.getLine();
@@ -143,6 +140,13 @@ public class Sintactico extends  Lexico {
                 case "real"://Producción para tipo de dato Real
                             temp=token.getToken();
                             if(String.valueOf(temp)=="Identificador"){
+                                if(symbolTable.containsKey(token.getName())){
+                                    line = token.getLine();
+                                    //Error semantico en Real
+                                    System.out.print("Identificador duplicado" + line);
+                                }else{
+                                    symbolTable.put(String.valueOf(token.getName()), "0");
+                                }
                                 temp=token.getToken();
                                 if(String.valueOf(temp)=="Punto y coma"){
                                     temp = token.getToken();
@@ -176,11 +180,19 @@ public class Sintactico extends  Lexico {
                 case "bool"://Producción para tipo de dato Booleano
                             temp=token.getToken();
                             if(String.valueOf(temp)=="Identificador"){
+                                if(symbolTable.containsKey(token.getName())){
+                                    line = token.getLine();
+                                    //Error semantico en Bool
+                                    System.out.print("Identificador duplicado" + line);
+                                }else{
+                                    symbolTable.put(String.valueOf(token.getName()), "0");
+                                }
                                 temp=token.getToken();
                                 if(String.valueOf(temp)=="Punto y coma"){
                                     temp = token.getToken();
                                     state = "index";
-                                }else if(String.valueOf(temp)=="Asignación"){
+                                    flag = true;
+                                }/*else if(String.valueOf(temp)=="Asignación"){
                                     //System.out.println("Se esperaba ;" + line);
                                     temp=token.getToken();
                                     if(String.valueOf(temp) == "TRUE" || String.valueOf(temp) == "FALSE"){
@@ -197,7 +209,7 @@ public class Sintactico extends  Lexico {
                                         System.out.println("Se esperaba true o false. Linea: " + line);
                                         temp=null;
                                     }
-                                }
+                                }*/
                             } else{
                                 LGUI.t4.append("falta identificador en variable. Linea: " + line);
                                 LGUI.t4.append("\r\n"); 
@@ -575,10 +587,13 @@ public class Sintactico extends  Lexico {
                        
         }
         if(flag){
-        System.out.println("\033[32m BUID SUCCESS ");
+        System.out.println("\033[32m BUILD SUCCESS ");
             LGUI.t4.append("\033[32m  BUILD SUCCESS!");
-            LGUI.t4.append("\r\n");  }
+            LGUI.t4.append("\r\n");
+        }
+        for (Map.Entry<String, String> entry : symbolTable.entrySet()) {
+            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+        }
     }
-        
-    
+       
 }
