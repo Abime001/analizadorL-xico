@@ -587,6 +587,14 @@ public class Sintactico extends  Lexico {
                        
         }
         if(flag){
+<<<<<<< HEAD
+        System.out.println("\033[32m BUID SUCCESS ");
+            LGUI.t4.append("\033[32m  BUILD SUCCESS!");
+            LGUI.t4.append("\r\n");  }
+    }
+        
+    
+=======
         System.out.println("\033[32m BUILD SUCCESS ");
             LGUI.t4.append("\033[32m  BUILD SUCCESS!");
             LGUI.t4.append("\r\n");
@@ -596,4 +604,5 @@ public class Sintactico extends  Lexico {
         }
     }
        
+>>>>>>> 0c92441d97e0873cd923bbd2b413f31e80ca3fb8
 }
