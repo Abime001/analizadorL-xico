@@ -1,0 +1,10 @@
+inicia
+	#Bool = true;
+	#Cad cadena = "Genial";
+	#Entero resultado;
+	resultado = 5 + 5;
+
+	mientras(resultado == 10)
+		hacer(<<cadena;)
+	
+termina

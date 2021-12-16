@@ -327,7 +327,7 @@ public class LGUI extends javax.swing.JFrame {
                 input = new BufferedReader(new StringReader(t1.getText()));
                 String line;
                 while((line=input.readLine())!=null){
-                    line.replace("\\s+",""); //Varios espacios combinados en uno solo
+                    line.replace("/s+",""); //Varios espacios combinados en uno solo
                     a = line.toCharArray(); //Una fila se convierte en una matriz
                     for (char c : a) 
                     {
@@ -340,7 +340,7 @@ public class LGUI extends javax.swing.JFrame {
                 ee.printStackTrace();
             }       
             //lexico.imprimeTablaTokens();
-            sintactico.imprimeTablaTokensSintac();
+            //sintactico.imprimeTablaTokensSintac();
             sintactico.S();
             
     }//GEN-LAST:event_b3ActionPerformed
@@ -356,16 +356,19 @@ public class LGUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Se invoca el método para cargar archivo 1
-        cargarArchivoCorrecto1("C:/Users/abime/Desktop/LENG/analizadorL-xico/src/clases/archivos/correcto1.txt");
+        //cargarArchivoCorrecto1("C:/Users/abime/Desktop/LENG/analizadorL-xico/src/clases/archivos/correcto1.txt");
+        cargarArchivoCorrecto1("C:/xampp/htdocs/Git/analizadorL-xico/src/clases/archivos/correcto1.txt");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Se invoca el método para cargar archivo 1
-        cargarArchivoCorrecto2("C:/Users/abime/Desktop/LENG/analizadorL-xico/src/clases/archivos/correcto2.txt");
+        //cargarArchivoCorrecto2("C:/Users/abime/Desktop/LENG/analizadorL-xico/src/clases/archivos/correcto2.txt");
+        cargarArchivoCorrecto2("C:/xampp/htdocs/Git/analizadorL-xico/src/clases/archivos/correcto2.txt");
     }//GEN-LAST:event_jButton2ActionPerformed
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         //Se invoca el método para cargar archivo 1
-        cargarArchivoIncorrecto("C:/Users/abime/Desktop/LENG/analizadorL-xico/src/clases/archivos/incorrecto.txt");
+        //cargarArchivoIncorrecto("C:/Users/abime/Desktop/LENG/analizadorL-xico/src/clases/archivos/incorrecto.txt");
+        cargarArchivoIncorrecto("C:/xampp/htdocs/Git/analizadorL-xico/src/clases/archivos/incorrecto.txt");
 
     }//GEN-LAST:event_jButton3ActionPerformed
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

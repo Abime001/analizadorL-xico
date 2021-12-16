@@ -1,0 +1,18 @@
+inicia
+	#Cad hola = "Hola";
+	#Cad adios = "Adios";
+	#Entero b;
+	#Entero c;
+	#Real resultado;
+	b = 5;
+	c = 9;
+	inicia 
+		resultado = b / c;
+		si(resultado >= 35)
+			entonces(<<a;)
+				
+		sno(<<adios;)
+	continua
+	si (a == hola)
+		entonces(<<resultado;)
+termina
