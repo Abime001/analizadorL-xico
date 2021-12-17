@@ -1,9 +1,9 @@
 /*
 Archivo: Lexico.java
 Materia: LENGUAJES Y AUTÓMATAS II
-Programa: 3.2 Analizador Lexico Básico
+Programa: 5.2 Analizador Lexico Básico
 Descripción: Se realiza el análisis léxico
-Fecha: 30-Nov-2021
+Fecha: 17-Dic-2021
 */
 package clases;
 import java.util.LinkedList;

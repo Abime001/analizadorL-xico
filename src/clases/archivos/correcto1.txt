@@ -1,4 +1,6 @@
 inicia
+        <<"Programa que calcula el Área de un Rombo";
+        <<"";
 	#Entero D;
 	D = 7;
 	#Entero d;
@@ -6,8 +8,7 @@ inicia
 	#Real resultado;
 	resultado = D * d;
 	resultado = resultado / 2;
-	<<"Area";
-	<<"Poligono";
-	<<"=";
+	<<"Area Rombo=";
 	<<resultado;
+	<<"";
 termina
