@@ -71,6 +71,8 @@ public class Token {
         }
         return temp.obtenerType(); //Valor para enviar a las listas Token
     }
+
+    
          
     public void eliminarFinalListaTokens(){
         int cont=0;
@@ -86,6 +88,11 @@ public class Token {
             temp.enlazarAlNodo(null);
         }
         size--;                      
+    }
+         
+    public void vaciar(){
+    cabeza=null;
+    size=0;
     }
      
     public void agregaPrimerolListaTokens(Object c,Object t, Object v,Object l){

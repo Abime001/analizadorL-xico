@@ -1162,4 +1162,11 @@ public class Lexico {
         }
 	token.reiniciaGet();                
     }
+
+    public void reinicia(){
+	token.reiniciaGetLast();                
+	token.reiniciaGet();
+        token.vaciar();
+    }
+    
 }

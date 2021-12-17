@@ -26,6 +26,7 @@ public class LGUI extends javax.swing.JFrame {
     BufferedReader input = null;
     Lexico lexico;
     Sintactico sintactico;
+    Token tok;
     NumeroLinea numeroLinea;
     
     public LGUI() {
@@ -347,7 +348,10 @@ public class LGUI extends javax.swing.JFrame {
 
     private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
             t2.setText("");
+            t4.setText("");
+            t5.setText("");
             System.out.flush();
+            lexico.reinicia();
     }//GEN-LAST:event_b2ActionPerformed
 
     private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
@@ -376,6 +380,7 @@ public class LGUI extends javax.swing.JFrame {
         String aux = "";
         String texto = "";
         String resultado = "";
+        
         try {
             JFileChooser file = new JFileChooser(System.getProperty("user.dir"));
             file.showOpenDialog(this);

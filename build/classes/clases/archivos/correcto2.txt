@@ -1,10 +1,13 @@
 inicia
-	#Bool = true;
-	#Cad cadena = "Genial";
-	#Entero resultado;
-	resultado = 5 + 5;
-
-	mientras(resultado == 10)
-		hacer(<<cadena;)
+	#Entero diagonalMayor;
+		diagonalMayor = 7;
+	#Entero diagonalMenor;
+		diagonalMenor = 5;
+	#Real resultado;
+	#Real res;
+	resultado = diagonalMayor * diagonalMenor;
+	res = resultado / 2;
 	
+	<<"Area de Poligono es = ";
+	<<res;
 termina
