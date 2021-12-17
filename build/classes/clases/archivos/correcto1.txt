@@ -1,20 +1,13 @@
 inicia
-	inicia
-		#Entero a;
-		#Entero b;
-		#Entero c;
-		#Cad var;
-		#Real mundo;
-	termina	
-	inicia
-	var="Resultado";
-	a = 5;
-	b = 20;
-	c=a+b;	
-	termina
-
-	inicia
-	<<var;
-	<<c;
-	termina
+	#Entero D;
+	D = 7;
+	#Entero d;
+ 	d = 5;
+	#Real resultado;
+	resultado = D * d;
+	resultado = resultado / 2;
+	<<"Area";
+	<<"Poligono";
+	<<"=";
+	<<resultado;
 termina

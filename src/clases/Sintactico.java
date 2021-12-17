@@ -1,25 +1,23 @@
 /*
-Archivo: Lexico.java
+Archivo: Sintactico.java
 Materia: LENGUAJES Y AUTÓMATAS II
-Programa: 3.2 Analizador Lexico Básico
-Descripción: Se realiza el análisis léxico
-Fecha: 30-Nov-2021
+Programa: 3.2 Analizador Sintáctico y Semántico Básico
+Descripción: Se realiza el análisis Sintáctico y Semántico 
+Fecha: 5-Dic-2021
 */
 package clases;
 import java.security.Key;
-//import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Map.Entry;
-//import javax.sound.sampled.LineUnavailableException;
+
 public class Sintactico extends  Lexico {
-    int line=0;
+    int Line=0;
     Map <String, String> symbolTableValor = new HashMap<String, String>();
     Map <String, String> symbolTableType = new HashMap<String, String>();
 
     public Sintactico(){
-
     }
     
     public void imprimeTablaTokensSintac(){
@@ -30,29 +28,17 @@ public class Sintactico extends  Lexico {
             temp=token.getToken();
         }
         token.reiniciaGet();
-    }
-    
-    public void imprimeTablaTokensReverseSintac(){
-        System.out.println("\n\r Sintactico Resverse: Tokens guardados...\n\r");
-        Object temp=token.getLastToken();                
-        while(temp!=null){                 
-            System.out.println("+"+temp);
-            temp=token.getLastToken();
-        }
-        token.reiniciaGetLast();
-    }
+    }    
         
-    public void S() {        
-        line++;
+    public void S() {//análisis Sintáctico y Semántico        
         String state = "index";
         Object temp=token.getToken();
-        Object line = token.getLine();
-        Object temp2=token.getLastToken();
-        
+        Object temp2=token.getLastToken();        
         boolean flag=false;
         while (temp!=null) {
-            switch (state) {
-                case "index": //Producción para tipo de dato Entero                
+            switch (state) {                
+                case "index"://Index de producciones
+                    Line++;//Una linea por instruccion
                     if(String.valueOf(temp) == "inicio_bloque"){
                         state="inicia";
                     }else if(String.valueOf(temp) == "fin_bloque"){
@@ -84,7 +70,7 @@ public class Sintactico extends  Lexico {
                     }else if(String.valueOf(temp) == "Paren cierra"){// s = 5 * (a+b);
                         temp=token.getToken();
                     }else{      
-                        LGUI.t4.append("Palabra no identificada"+temp+" en Linea "+token.getLine());
+                        LGUI.t4.append("Palabra no identificada '"+temp+"', Linea: "+Line);
                         LGUI.t4.append("\r\n");                 
                         temp=null;
                         flag=false;
@@ -97,7 +83,7 @@ public class Sintactico extends  Lexico {
                             state ="index";
                             flag=true;
                         }else{
-                            LGUI.t4.append("Error al declarar bloque");
+                            LGUI.t4.append("Error al declarar bloque, Linea: "+Line);
                             LGUI.t4.append("\r\n");  
                             flag=false;
                             temp=null;                   
@@ -108,10 +94,7 @@ public class Sintactico extends  Lexico {
                             temp = token.getToken();
                             if(String.valueOf(temp)=="Identificador"){
                                 if(symbolTableValor.containsKey(token.getName())){
-                                    line = token.getLine();
-                                    //Error semantico
-                                    line = token.getLine(); 
-                                    LGUI.t4.append("Identificador duplicado " + line);
+                                    LGUI.t4.append("Identificador duplicado " + Line);
                                     LGUI.t4.append("\r\n");                                    
                                     temp = null;
                                     flag=false;
@@ -127,16 +110,15 @@ public class Sintactico extends  Lexico {
                                     state = "index";
                                     flag=true;
                                 }else{ 
-                                    LGUI.t4.append("Error al declarar Sentencia. Linea: " + line);
+                                    LGUI.t4.append("Error al declarar Sentencia. Linea: " + Line);
                                     LGUI.t4.append("\r\n");  
                                     temp=null;
                                     flag=false;
 
                                 }
                             }else{
-                                LGUI.t4.append("falta identificador en variable. Linea: " + line);
-                                LGUI.t4.append("\r\n");  
-                                line = token.getLine();
+                                LGUI.t4.append("falta identificador en variable. Linea: " + Line);
+                                LGUI.t4.append("\r\n");
                                 temp=null;
                                 flag=false;                                
                             }                        
@@ -147,8 +129,7 @@ public class Sintactico extends  Lexico {
                             if(String.valueOf(temp)=="Identificador"){
                                 if(symbolTableValor.containsKey(token.getName())){
                                     //Error semantico en Real
-                                    line = token.getLine(); 
-                                    LGUI.t4.append("Identificador duplicado " + line);
+                                    LGUI.t4.append("Identificador duplicado " + Line);
                                     LGUI.t4.append("\r\n");                                    
                                     temp = null;
                                     flag = false;
@@ -162,16 +143,14 @@ public class Sintactico extends  Lexico {
                                     temp = token.getToken();
                                     state ="index";
                                 }else{
-                                    line = token.getLine(); 
-                                    LGUI.t4.append("Se esperaba ' ; '. Linea: " + line);
+                                    LGUI.t4.append("Se esperaba ' ; '. Linea: " + Line);
                                     LGUI.t4.append("\r\n");
                                     temp=null;
                                     flag=false;
                                     break;
                                 }
                             } else{                  
-                                line = token.getLine(); 
-                                LGUI.t4.append("falta identificador en variable. Linea: " + line);
+                                LGUI.t4.append("falta identificador en variable. Linea: " + Line);
                                 LGUI.t4.append("\r\n"); 
                                 temp=null;
                                 flag=false;                                
@@ -182,8 +161,7 @@ public class Sintactico extends  Lexico {
                             temp=token.getToken();
                             if(String.valueOf(temp)=="Identificador"){
                                 if(symbolTableValor.containsKey(token.getName())){
-                                    line = token.getLine();//error 
-                                    LGUI.t4.append("Identificador duplicado " + line);
+                                    LGUI.t4.append("Identificador duplicado " + Line);
                                     LGUI.t4.append("\r\n");                                    
                                     //Error semantico en Bool
                                     temp=null;
@@ -200,8 +178,7 @@ public class Sintactico extends  Lexico {
                                     flag=true;
                                 }
                             } else{
-                                line = token.getLine(); 
-                                LGUI.t4.append("falta identificador en variable. Linea: " + line);
+                                LGUI.t4.append("falta identificador en variable. Linea: " + Line);
                                 LGUI.t4.append("\r\n"); 
                                 temp=null;
                                 flag=false;
@@ -213,8 +190,7 @@ public class Sintactico extends  Lexico {
                             if(String.valueOf(temp)=="Identificador"){
                                 if(symbolTableValor.containsKey(token.getName())){
                                     //Error semantico en Bool
-                                    line = token.getLine(); 
-                                    LGUI.t4.append("Identificador duplicado " + line);
+                                    LGUI.t4.append("Identificador duplicado " + Line);
                                     LGUI.t4.append("\r\n");                                    
                                     temp=null;
                                     flag = false;
@@ -229,15 +205,13 @@ public class Sintactico extends  Lexico {
                                     state = "index";
                                     flag=true;
                                 }else{ 
-                                    line = token.getLine();
-                                    LGUI.t4.append("Se esperaban cosquillas. Linea: " + line);
+                                    LGUI.t4.append("Se esperaban cosquillas. Linea: " + Line);
                                     LGUI.t4.append("\r\n");                                     
                                     temp=null;   
                                     flag=false;
                                 }
                             } else{
-                                line = token.getLine();
-                                LGUI.t4.append("falta identificador en variable. Linea: " + line);
+                                LGUI.t4.append("falta identificador en variable. Linea: " + Line);
                                 LGUI.t4.append("\r\n");                                
                                 temp=null;
                                 flag=false;
@@ -255,8 +229,7 @@ public class Sintactico extends  Lexico {
                                         getValueFromKeyType1 = getSingleValueFromKey(symbolTableType, token.getName());                                        
                                         temp = token.getToken();                                        
                                     }else{
-                                        line = token.getLine();
-                                        LGUI.t4.append("Error, No esta declarada la variable. Linea: " + line);
+                                        LGUI.t4.append("Error, No esta declarada la variable. Linea: " + Line);
                                         LGUI.t4.append("\r\n");
                                         temp=null;                           
                                         flag=false;
@@ -274,24 +247,21 @@ public class Sintactico extends  Lexico {
                                                         state = "index";
                                                         flag=true;
                                                     }else{
-                                                        line = token.getLine();
-                                                        LGUI.t4.append("Error se esperaba ')'. Linea: " + line);
+                                                        LGUI.t4.append("Error se esperaba ')'. Linea: " + Line);
                                                         LGUI.t4.append("\r\n");
                                                         temp=null;                           
                                                         flag=false;
                                                         break;
                                                     }
                                                 }else{                                                    
-                                                    line = token.getLine();
-                                                    LGUI.t4.append("Error, Tipos de dato incompatibles. Linea: " + line);
+                                                    LGUI.t4.append("Error, Tipos de dato incompatibles. Linea: " + Line);
                                                     LGUI.t4.append("\r\n");
                                                     temp=null;                           
                                                     flag=false;
                                                     break;                                                    
                                                 }                                                   
                                             }else{
-                                                line = token.getLine();
-                                                LGUI.t4.append("Error, Falta declarar variable. Linea: " + line);
+                                                LGUI.t4.append("Error, Falta declarar variable. Linea: " + Line);
                                                 LGUI.t4.append("\r\n");
                                                 temp=null;                           
                                                 flag=false;
@@ -306,8 +276,7 @@ public class Sintactico extends  Lexico {
                                                     state = "index";
                                                     flag=true;
                                                 }else{
-                                                    line = token.getLine();
-                                                    LGUI.t4.append("Error se esperaba ')'. Linea: " + line);
+                                                    LGUI.t4.append("Error se esperaba ')'. Linea: " + Line);
                                                     LGUI.t4.append("\r\n");
                                                     temp=null;                           
                                                     flag=false;
@@ -318,23 +287,20 @@ public class Sintactico extends  Lexico {
                                             }
                                         }
                                     }else{
-                                        line = token.getLine();
-                                        LGUI.t4.append("Error simbolo de comparacion. Linea: " + line);
+                                        LGUI.t4.append("Error simbolo de comparacion. Linea: " + Line);
                                         LGUI.t4.append("\r\n");                                        
                                         temp=null;
                                         flag=false;
                                         break;
                                     }
                                 }else{
-                                    LGUI.t4.append("Error en condición. Linea: " + line);
+                                    LGUI.t4.append("Error en condición. Linea: " + Line);
                                     LGUI.t4.append("\r\n");
-                                    line = token.getLine();
                                     temp=null;
                                 }
                             } else{
-                                LGUI.t4.append("Se esperaba '('. Linea: " + line);
+                                LGUI.t4.append("Se esperaba '('. Linea: " + Line);
                                 LGUI.t4.append("\r\n");
-                                line = token.getLine(); 
                                 temp=null;
                             }
                         break;
@@ -367,15 +333,13 @@ public class Sintactico extends  Lexico {
                                     temp = token.getToken();
                                     state = "index";
                                 }else{
-                                    LGUI.t4.append("Se esperaba ')' Linea: " + line);
+                                    LGUI.t4.append("Se esperaba ')' Linea: " + Line);
                                     LGUI.t4.append("\r\n");
-                                    line = token.getLine(); 
                                     temp=null;
                                 }
                             } else{
-                                LGUI.t4.append("Se esperaba '(' Linea: " + line);
+                                LGUI.t4.append("Se esperaba '(' Linea: " + Line);
                                 LGUI.t4.append("\r\n");
-                                line = token.getLine(); 
                                 temp=null;
                             }                                             
                         break;
@@ -385,29 +349,45 @@ public class Sintactico extends  Lexico {
                             String auxImprime=null;                            
                             if(String.valueOf(temp) == "COMILLAS DOBLES"){//<<"
                                 temp = token.getToken();
-                                while(String.valueOf(temp)!="COMILLAS DOBLES"){  
-                                    auxImprime=token.getName();
-                                    LGUI.t4.append(auxImprime+" ");                                    
-                                    temp = token.getToken();                                    
-                                }
+                                if(String.valueOf(temp)=="COMILLAS DOBLES"){//Dar un salto de linea
+                                    LGUI.t4.append("\r\n");
+                                    temp=token.getToken();
+                                    if(String.valueOf(temp) == "Punto y coma"){
+                                        state = "index";
+                                        temp = token.getToken();
+                                        flag=true;
+                                        break;
+                                    }else{
+                                        LGUI.t4.append("Se esperaba ';' Linea: " + Line);
+                                        LGUI.t4.append("\r\n");
+                                        temp=null;
+                                        flag=false;
+                                        break;
+                                    }  
+                                }else{
+                                    while(String.valueOf(temp)!="COMILLAS DOBLES"){  
+                                        auxImprime=token.getName();
+                                        LGUI.t4.append(auxImprime+" ");                                    
+                                        temp = token.getToken();                                    
+                                    }
+
+                                }                            
                                     if(String.valueOf(temp) == "COMILLAS DOBLES"){
                                       temp=token.getToken(); 
                                       if(String.valueOf(temp) == "Punto y coma"){
                                         state = "index";
-                                        LGUI.t4.append("\r\n");
+                                        //LGUI.t4.append("\r\n");
                                         temp = token.getToken();
                                         flag=true;                                
                                     }else{
-                                        line = token.getLine(); 
-                                        LGUI.t4.append("Se esperaba ';' Linea: " + line);
+                                        LGUI.t4.append("Se esperaba ';' Linea: " + Line);
                                         LGUI.t4.append("\r\n");
                                         temp=null;
                                         flag=false;
                                         break;
                                     }
                                     }else{
-                                        line = token.getLine(); 
-                                        LGUI.t4.append("Se esperaban ' \" ' Linea: " + line);
+                                        LGUI.t4.append("Se esperaban ' \" ' Linea: " + Line);
                                         LGUI.t4.append("\r\n");
                                         temp=null;
                                         flag=false;
@@ -422,8 +402,7 @@ public class Sintactico extends  Lexico {
                                         flag=true;
                                         break;
                                     }else{
-                                        line = token.getLine(); 
-                                        LGUI.t4.append("Se esperaba ';' Linea: " + line);
+                                        LGUI.t4.append("Se esperaba ';' Linea: " + Line);
                                         LGUI.t4.append("\r\n");
                                         temp=null;
                                         flag=false;
@@ -436,13 +415,12 @@ public class Sintactico extends  Lexico {
                                     temp=token.getToken();
                                     if(String.valueOf(temp) == "Punto y coma"){                                        
                                         state = "index";
-                                        LGUI.t4.append(getValueFromKey);
-                                        LGUI.t4.append("\r\n");
+                                        LGUI.t4.append(" "+getValueFromKey+" ");
+                                        //LGUI.t4.append("\r\n");
                                         temp = token.getToken();
                                         flag=true;
                                     }else{
-                                        line = token.getLine(); 
-                                        LGUI.t4.append("Se esperaba ';' Linea: " + line);
+                                        LGUI.t4.append("Se esperaba ';' Linea: " + Line);
                                         LGUI.t4.append("\r\n");
                                         temp=null;
                                         flag = false;
@@ -450,8 +428,7 @@ public class Sintactico extends  Lexico {
                                     }                                    
                                 }else{
                                     //Error semantico en Bool
-                                    line = token.getLine(); 
-                                    LGUI.t4.append("Error, la variable no esta declarada. Linea: " + line);
+                                    LGUI.t4.append("Error, la variable no esta declarada. Linea: " + Line);
                                     LGUI.t4.append("\r\n");                                    
                                     temp=null;
                                     flag = false;
@@ -467,17 +444,15 @@ public class Sintactico extends  Lexico {
                                    flag=true;
                                    state = "index";
                                 }else{
-                                    LGUI.t4.append("Se esperaba ' ; '. Linea: " + line);
+                                    LGUI.t4.append("Se esperaba ' ; '. Linea: " + Line);
                                     LGUI.t4.append("\r\n");
-                                    line = token.getLine(); 
                                     temp=null;
                                     flag = false;
                                     break;                
                                 }                                
                             }else{
-                                LGUI.t4.append("Se esperaba ' un valor '. Linea: " + line);
+                                LGUI.t4.append("Se esperaba ' un valor '. Linea: " + Line);
                                 LGUI.t4.append("\r\n");
-                                line = token.getLine(); 
                                 temp=null;
                             }
                         break;
@@ -510,16 +485,14 @@ public class Sintactico extends  Lexico {
                                     temp = token.getToken();
                                     state = "index";
                                 }else{
-                                    LGUI.t4.append("Se esperaba ' ) '. Linea: " + line);
+                                    LGUI.t4.append("Se esperaba ' ) '. Linea: " + Line);
                                     LGUI.t4.append("\r\n");
-                                    line = token.getLine(); 
                                     temp=null;
                                 }
 
                             }else{
-                                LGUI.t4.append("Se esperaba '('. Linea: " + line);
+                                LGUI.t4.append("Se esperaba '('. Linea: " + Line);
                                 LGUI.t4.append("\r\n");
-                                line = token.getLine();
                                 temp=null;
                             }
                         break;
@@ -538,28 +511,24 @@ public class Sintactico extends  Lexico {
                                                 state = "index";
                                             }
                                         }else{
-                                            LGUI.t4.append("Error en condición, símbolo erroneo. Linea: " + line);
+                                            LGUI.t4.append("Error en condición, símbolo erroneo. Linea: " + Line);
                                             LGUI.t4.append("\r\n");
-                                            line = token.getLine();
                                             temp=null;
                                         }
                                     }else{
-                                        LGUI.t4.append("Error en condición. Linea: " + line);
+                                        LGUI.t4.append("Error en condición. Linea: " + Line);
                                         LGUI.t4.append("\r\n");
-                                        line = token.getLine();
                                         temp=null;
                                     }
                                 }else{
-                                    LGUI.t4.append("Error en condición. Linea: " + line);
+                                    LGUI.t4.append("Error en condición. Linea: " + Line);
                                     LGUI.t4.append("\r\n");
-                                    line = token.getLine();
                                     temp=null;
                                 }
                                 
                             }else{
-                                LGUI.t4.append("Se esperaba '('. Linea: " + line);
+                                LGUI.t4.append("Se esperaba '('. Linea: " + Line);
                                 LGUI.t4.append("\r\n");
-                                line = token.getLine();
                                 temp=null;
                             }
                         break;
@@ -591,16 +560,14 @@ public class Sintactico extends  Lexico {
                                     temp = token.getToken();
                                     state = "index";
                                 }else{
-                                    LGUI.t4.append("Se esperaba ')'. Linea: " + line);
+                                    LGUI.t4.append("Se esperaba ')'. Linea: " + Line);
                                     LGUI.t4.append("\r\n");
-                                    line = token.getLine();
                                     temp=null;
                                 }
 
                             }else{
-                                LGUI.t4.append("Se esperaba '('. Linea: " + line);
+                                LGUI.t4.append("Se esperaba '('. Linea: " + Line);
                                 LGUI.t4.append("\r\n");
-                                line = token.getLine();
                                 temp=null;
                             }
                         break;
@@ -622,8 +589,7 @@ public class Sintactico extends  Lexico {
                                 temp = token.getToken();
                             }else{
                                 //Error semantico en Bool
-                                line = token.getLine(); 
-                                LGUI.t4.append("Variable no declarada, Linea"+ line);
+                                LGUI.t4.append("Variable no declarada, Linea: "+ Line);
                                 LGUI.t4.append("\r\n");                                    
                                 temp=null;
                                 flag = false;
@@ -639,9 +605,8 @@ public class Sintactico extends  Lexico {
                                         symbolTableValor.replace(auxName, getValueFromKey);
                                         temp = token.getToken();
                                     }else{
-                                        line = token.getLine();
                                         //Error semantico en Bool
-                                        LGUI.t4.append("Variable no declarada" + line);
+                                        LGUI.t4.append("Variable no declarada" + Line);
                                         LGUI.t4.append("\r\n");                                    
                                         temp=null;
                                         flag = false;
@@ -679,16 +644,14 @@ public class Sintactico extends  Lexico {
                                                     state = "index";
                                                     flag=true;
                                                 }else{
-                                                    line = token.getLine();
-                                                    LGUI.t4.append("Se esperaba ';'. Linea: " + line);
+                                                    LGUI.t4.append("Se esperaba ';', Linea: " + Line);
                                                     LGUI.t4.append("\r\n");
                                                     temp=null;
                                                     break;
                                                 }
                                             }else{
-                                                line = token.getLine();
                                                 //Error semantico en Bool
-                                                LGUI.t4.append("Variable no declarada" + line);
+                                                LGUI.t4.append("Variable no declarada" + Line);
                                                 LGUI.t4.append("\r\n");                                    
                                                 temp=null;
                                                 flag = false;
@@ -717,24 +680,21 @@ public class Sintactico extends  Lexico {
                                                 state = "index";
                                                 flag=true;
                                             }else{
-                                                line = token.getLine();
-                                                LGUI.t4.append("Se esperaba ';'. Linea: " + line);
+                                                LGUI.t4.append("Se esperaba ';'. Linea: " + Line);
                                                 LGUI.t4.append("\r\n");
                                                 temp=null;
                                                 flag=false;
                                                 break;
                                             }
                                         }else{
-                                            line = token.getLine();
-                                            LGUI.t4.append("Se esperaba un valor. Linea: " + line);
+                                            LGUI.t4.append("Se esperaba un valor. Linea: " + Line);
                                             LGUI.t4.append("\r\n");
                                             temp=null;
                                             flag=false;
                                             break;
                                         }
                                     }else{
-                                        line = token.getLine();
-                                        LGUI.t4.append("Se esperaba un ' operador '. Linea: " + line);
+                                        LGUI.t4.append("Se esperaba un ' operador '. Linea: " + Line);
                                         LGUI.t4.append("\r\n");
                                         temp=null;
                                         flag=false;
@@ -772,17 +732,15 @@ public class Sintactico extends  Lexico {
                                                     state = "index";
                                                     flag=true;
                                                 }else{
-                                                    line = token.getLine();
-                                                    LGUI.t4.append("Se esperaba ';'. Linea: " + line);
+                                                    LGUI.t4.append("Se esperaba ';'. Linea: " + Line);
                                                     LGUI.t4.append("\r\n");
                                                     temp=null;
                                                     flag=false;
                                                     break;
                                                 }
                                             }else{
-                                                line = token.getLine();
                                                 //Error semantico en Bool
-                                                LGUI.t4.append("Variable no declarada" + line);
+                                                LGUI.t4.append("Variable no declarada" + Line);
                                                 LGUI.t4.append("\r\n");
                                                 temp=null;
                                                 flag = false;
@@ -807,24 +765,21 @@ public class Sintactico extends  Lexico {
                                                 state = "index";
                                                 flag=true;
                                             }else{
-                                                line = token.getLine();
-                                                LGUI.t4.append("Se esperaba ';'. Linea: " + line);
+                                                LGUI.t4.append("Se esperaba ';'. Linea: " + Line);
                                                 LGUI.t4.append("\r\n");
                                                 temp=null;
                                                 flag=false;
                                                 break;
                                             }
                                         }else{
-                                            line = token.getLine();
-                                            LGUI.t4.append("Se esperaba un valor. Linea: " + line);
+                                            LGUI.t4.append("Se esperaba un valor. Linea: " + Line);
                                             LGUI.t4.append("\r\n");
                                             temp=null;
                                             flag=false;
                                             break;
                                         }
                                     }else{
-                                        line = token.getLine();
-                                        LGUI.t4.append("Se esperaba ';'. Linea: " + line);
+                                        LGUI.t4.append("Se esperaba ';'. Linea: " + Line);
                                         LGUI.t4.append("\r\n");
                                         temp=null;
                                         flag=false;
@@ -843,8 +798,7 @@ public class Sintactico extends  Lexico {
                                                 state = "index";
                                                 flag=true;
                                             }else{
-                                                line = token.getLine();
-                                                LGUI.t4.append("Se esperaba ';'. Linea: " + line);
+                                                LGUI.t4.append("Se esperaba ';'. Linea: " + Line);
                                                 LGUI.t4.append("\r\n");
                                                 temp=null;
                                                 flag=false;
@@ -852,8 +806,7 @@ public class Sintactico extends  Lexico {
                                             }
                                             
                                         }else {
-                                            line = token.getLine();
-                                            LGUI.t4.append("Se esperaba ' \" '. Linea: " + line);
+                                            LGUI.t4.append("Se esperaba ' \" '. Linea: " + Line);
                                             LGUI.t4.append("\r\n");
                                             temp=null;
                                             flag=false;
@@ -869,8 +822,7 @@ public class Sintactico extends  Lexico {
                                         state = "index";
                                         flag=true;
                                     }else{
-                                        line = token.getLine();
-                                        LGUI.t4.append("Se esperaba ';'. Linea: " + line);
+                                        LGUI.t4.append("Se esperaba ';'. Linea: " + Line);
                                         LGUI.t4.append("\r\n");
                                         temp=null;
                                         flag=false;
@@ -878,35 +830,33 @@ public class Sintactico extends  Lexico {
                                     }
 
                                 }else{
-                                line = token.getLine();
-                                LGUI.t4.append("Se esperaba 'Identificador, Número o Comillas'. Linea: " + line);
+                                LGUI.t4.append("Se esperaba 'Identificador, Número o Comillas'. Linea: " + Line);
                                 LGUI.t4.append("\r\n");                           
                                 temp=null;
                                 flag = false;                                    
                                 }
                             }else{
-                                line = token.getLine();
-                                LGUI.t4.append("Se esperaba '='. Linea: " + line);
+                                LGUI.t4.append("Se esperaba '='. Linea: " + Line);
                                 LGUI.t4.append("\r\n");                           
                                 temp=null;
                                 flag = false;
                             }                
                         break;
-            }
-                       
+            }                       
         }
+        
         if(flag==true){
             System.out.println("\033[32m BUILD SUCCESS ");
-            LGUI.t4.append("BUILD SUCCESS!");
-            LGUI.t4.append("\r\n");
+            LGUI.t4.append("\r\nBUILD SUCCESS!\r\n");
+
         }else{
             System.out.println("ERROR AL COMPILAR");
-            LGUI.t4.append("ERROR AL COMPILAR");
-            LGUI.t4.append("\r\n");
-        }
+            LGUI.t4.append("\r\nERROR AL COMPILAR\r\n");
+
+        }/*
         for (Map.Entry<String, String> entry : symbolTableValor.entrySet()) {
             LGUI.t5.append("< " + entry.getKey() + " | " + entry.getValue()+" >\r\n");
-        }
+        }*/        
     }
     
     public String buscar(String key){
@@ -915,6 +865,24 @@ public class Sintactico extends  Lexico {
         }else{
         return "null";
         }
+    }
+    
+    public void imprimirTS(){
+        Object temp;
+        token.reiniciaGet();
+        temp=token.getToken();
+        LGUI.t5.append("CADENA \tVALOR \tLINEA\r\n\r\n");
+        for (Map.Entry<String, String> entry : symbolTableValor.entrySet()) {
+            LGUI.t5.append(entry.getKey() + "\t"+entry.getValue()+ "\t");        
+            while(temp!=null){
+                if(token.getName().equals(entry.getKey()))
+                    LGUI.t5.append(">"+String.valueOf(token.getLine()));
+                temp=token.getToken();
+            }
+            LGUI.t5.append("\r\n");
+            token.reiniciaGet();
+            temp=token.getToken();
+        }        
     }
     
     public static <K, V> V getSingleValueFromKey(Map<K, V> map, K key) {

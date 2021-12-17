@@ -17,11 +17,12 @@ public class Token {
     int nGetLast;
     
     public Token(){
-        cabeza=null;                            
+        cabeza=null;             
     }
 
     public void reiniciaGet(){
-        nGet=size-1;  
+        if(sizelListaTokens()>0)
+            nGet=size-1;  
     }
 
     public void reiniciaGetLast(){
@@ -95,8 +96,9 @@ public class Token {
     size=0;
     }
      
-    public void agregaPrimerolListaTokens(Object c,Object t, Object v,Object l){
+    public void agregaPrimerolListaTokens(Object c,Object t, Object v,Object l){        
         if (estaVacialListaTokens()){
+            LGUI.t2.append("CADENA \tTIPO \tVALOR \tLINEA\n\r\n\r");
             cabeza= new Nodo(c,t,v,l);
         }
         else{                        
@@ -124,14 +126,8 @@ public class Token {
         
     @Override
     public String toString() { 
-        agregaPrimerolListaTokens(name, type, valor, line);
-        
-        return "Token{" +
-                "nombre='" + name + '\'' +
-                ", tipo='" + type + '\'' +
-                ", valor='" + valor + '\'' +
-                ", linea='" + line + '\'' +
-                '}';
+        agregaPrimerolListaTokens(name, type, valor, line);        
+        return  name +"\t"+type +"\t"+valor +"\t"+line;
     }
         
 

@@ -6,8 +6,10 @@ inicia
 	#Real resultado;
 	#Real res;
 	resultado = diagonalMayor * diagonalMenor;
-	res = resultado / 2;
-	
+	res = resultado / 2;	
+        <<"***Programa 2***";
+	<<"";
 	<<"Area de Poligono es = ";
 	<<res;
+	<<"";
 termina
